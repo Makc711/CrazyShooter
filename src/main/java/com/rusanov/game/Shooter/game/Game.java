@@ -210,7 +210,7 @@ public class Game implements Serializable {
         }
     }
 
-    private void resetGameProgress() {
+    public void resetGameProgress() {
         Input.keyboardRefresh();
         isPlayerDied = false;
         isEnemyDied = false;

@@ -1,8 +1,5 @@
 package com.rusanov.game.Shooter.menu;
 
-import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.TrueTypeFont;
-
 import java.awt.*;
 
 public class MenuConstants {
@@ -51,7 +48,4 @@ public class MenuConstants {
     static final String NAME_OF_CONTROL_SETTINGS = "src\\main\\resources\\Options\\Control.dat";
     static final String NAME_OF_VIDEO_SETTINGS = "src\\main\\resources\\Options\\Video.dat";
     static final String NAME_OF_SAVE = "src\\main\\resources\\Saves\\Save.dat";
-
-    //public static final int TEXTURE_FONT = GL11.glGenTextures() + 1;
-    //public static final TrueTypeFont TIMES_NEW_ROMAN = new TrueTypeFont(new Font("Times New Roman", Font.BOLD, MenuSizes.MENU_FONT_SIZE), true);
 }

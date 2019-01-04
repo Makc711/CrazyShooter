@@ -56,11 +56,12 @@ public class PauseMenu implements Serializable {
                         case CONTINUE:
                             game.setGameState(Game.GameState.PLAY);
                             break;
-                        case CANCEL:
-                            game.setGameState(Game.GameState.MENU);
-                            break;
                         case SAVE:
                             saveGame();
+                            break;
+                        case CANCEL:
+                            game.setGameState(Game.GameState.MENU);
+                            game.resetGameProgress();
                             break;
                         default:
                             System.err.println("Error: Unknown pause menu state \"" + item + "\"!");
