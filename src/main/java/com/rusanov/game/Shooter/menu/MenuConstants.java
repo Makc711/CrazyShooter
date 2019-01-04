@@ -44,4 +44,6 @@ public class MenuConstants {
 
     static final int CHECKBOX_BORDER_ACTIVE = 4;
     static final int CHECKBOX_BORDER_SELECTED = 12;
+
+    static final String NAME_OF_CONTROL_SETTINGS = "src\\main\\resources\\Options\\Control.dat";
 }
