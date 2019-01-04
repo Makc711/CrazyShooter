@@ -1,8 +1,13 @@
 package com.rusanov.game.Shooter.menu;
 
-import com.rusanov.game.Shooter.game.Constants;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
 public class MenuSizes {
+    public static boolean FULLSCREEN;
+    public static int SCREEN_WIDTH;
+    public static int SCREEN_HEIGHT;
+
     static int MENU_FONT_SIZE;
 
     public static int BUTTON_WIDTH;
@@ -32,8 +37,18 @@ public class MenuSizes {
     static int VIDEO_FIELD_X;
 
     public MenuSizes() {
-        double scaleX = (double) Constants.SCREEN_WIDTH / MenuConstants.STANDARD_SCREEN_WIDTH;
-        double scaleY = (double) Constants.SCREEN_HEIGHT / MenuConstants.STANDARD_SCREEN_HEIGHT;
+        try(ObjectInputStream videoSettings = new ObjectInputStream(new FileInputStream(MenuConstants.NAME_OF_VIDEO_SETTINGS))) {
+            FULLSCREEN = videoSettings.readBoolean();
+            SCREEN_WIDTH = videoSettings.readInt();
+            SCREEN_HEIGHT = videoSettings.readInt();
+        } catch(Exception e) {
+            FULLSCREEN = false;
+            SCREEN_WIDTH = 800;
+            SCREEN_HEIGHT = 600;
+        }
+
+        double scaleX = (double) SCREEN_WIDTH / MenuConstants.STANDARD_SCREEN_WIDTH;
+        double scaleY = (double) SCREEN_HEIGHT / MenuConstants.STANDARD_SCREEN_HEIGHT;
 
         MENU_FONT_SIZE = (int)(MenuConstants.MENU_FONT_SIZE * scaleY);
 
@@ -42,11 +57,11 @@ public class MenuSizes {
         BUTTON_OPTIONS_BORDER_X = (int)(MenuConstants.BUTTON_OPTIONS_BORDER_X * scaleX);
         BUTTON_OPTIONS_BORDER_Y = (int)(MenuConstants.BUTTON_OPTIONS_BORDER_Y * scaleY);
         DISTANCE_BETWEEN_BUTTONS_Y = (int)(BUTTON_HEIGHT + MenuConstants.DISTANCE_BETWEEN_BUTTONS_Y * scaleY);
-        BUTTON_MENU_X = Constants.SCREEN_WIDTH / 2 - BUTTON_WIDTH / 2;
+        BUTTON_MENU_X = SCREEN_WIDTH / 2 - BUTTON_WIDTH / 2;
         BUTTON_BORDER_WIDTH = (int)(MenuConstants.BUTTON_BORDER_WIDTH * scaleY);
         MENU_OPTIONS_BACKGROUND_X = 2 * BUTTON_OPTIONS_BORDER_X + BUTTON_WIDTH;
         MENU_OPTIONS_BACKGROUND_Y = BUTTON_OPTIONS_BORDER_Y;
-        MENU_OPTIONS_BACKGROUND_WIDTH = Constants.SCREEN_WIDTH - MENU_OPTIONS_BACKGROUND_X - BUTTON_OPTIONS_BORDER_X;
+        MENU_OPTIONS_BACKGROUND_WIDTH = SCREEN_WIDTH - MENU_OPTIONS_BACKGROUND_X - BUTTON_OPTIONS_BORDER_X;
         MENU_OPTIONS_X = MENU_OPTIONS_BACKGROUND_X + BUTTON_OPTIONS_BORDER_X / 2;
         MENU_OPTIONS_Y = MENU_OPTIONS_BACKGROUND_Y + BUTTON_OPTIONS_BORDER_Y / 2;
 

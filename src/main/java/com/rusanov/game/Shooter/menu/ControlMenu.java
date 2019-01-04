@@ -144,7 +144,7 @@ class ControlMenu {
         int backgroundX = MenuSizes.MENU_OPTIONS_BACKGROUND_X;
         int backgroundY = MenuSizes.MENU_OPTIONS_BACKGROUND_Y;
         int backgroundWidth = MenuSizes.MENU_OPTIONS_BACKGROUND_WIDTH;
-        int backgroundHeight = Constants.SCREEN_HEIGHT - 2 * MenuSizes.BUTTON_OPTIONS_BORDER_Y;
+        int backgroundHeight = MenuSizes.SCREEN_HEIGHT - 2 * MenuSizes.BUTTON_OPTIONS_BORDER_Y;
         menuObjects.add(new Background(backgroundX, backgroundY, backgroundWidth, backgroundHeight));
         MenuButton button = new MenuButton(false, "SAVE", font, textureFont,
                 backgroundX + backgroundWidth / 2 - MenuSizes.BUTTON_WIDTH / 2,

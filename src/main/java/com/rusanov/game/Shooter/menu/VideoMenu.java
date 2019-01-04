@@ -9,6 +9,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.TrueTypeFont;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +21,9 @@ class VideoMenu {
     private boolean isSettingsChanged = false;
     private Checkbox checkboxFullscreen;
     private Checkbox checkboxWidescreen;
-    private boolean isFullscreen = Constants.FULLSCREEN;
-    private int screenWidth = Constants.SCREEN_WIDTH;
-    private int screenHeight = Constants.SCREEN_HEIGHT;
+    private boolean isFullscreen = MenuSizes.FULLSCREEN;
+    private int screenWidth = MenuSizes.SCREEN_WIDTH;
+    private int screenHeight = MenuSizes.SCREEN_HEIGHT;
     private Game game;
 
     VideoMenu(MenuButton buttonVideo, Game game, TrueTypeFont font, int textureFont) {
@@ -65,7 +66,7 @@ class VideoMenu {
                         current.getFrequency() == Constants.FPS) {
                     String nameOfField = current.getWidth() + "x" + current.getHeight();
                     boolean isFieldSelected = false;
-                    if (Constants.SCREEN_WIDTH == current.getWidth() && Constants.SCREEN_HEIGHT == current.getHeight()) {
+                    if (MenuSizes.SCREEN_WIDTH == current.getWidth() && MenuSizes.SCREEN_HEIGHT == current.getHeight()) {
                         isFieldSelected = true;
                     }
                     Field field = new Field(font, textureFont, isFieldSelected);
@@ -153,23 +154,27 @@ class VideoMenu {
     }
 
     private void saveSettings() {
-        Constants.FULLSCREEN = isFullscreen;
-        Constants.SCREEN_WIDTH = screenWidth;
-        Constants.SCREEN_HEIGHT = screenHeight;
+        try(ObjectOutputStream videoSettings = new ObjectOutputStream(new FileOutputStream(MenuConstants.NAME_OF_VIDEO_SETTINGS))) {
+            videoSettings.writeBoolean(isFullscreen);
+            videoSettings.writeInt(screenWidth);
+            videoSettings.writeInt(screenHeight);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         game.reload();
     }
 
     void resetChangedSettings() {
         if (isSettingsChanged) {
             checkboxFullscreen.setSelected(Display.isFullscreen());
-            isFullscreen = Constants.FULLSCREEN;
-            screenWidth = Constants.SCREEN_WIDTH;
-            screenHeight = Constants.SCREEN_HEIGHT;
+            isFullscreen = MenuSizes.FULLSCREEN;
+            screenWidth = MenuSizes.SCREEN_WIDTH;
+            screenHeight = MenuSizes.SCREEN_HEIGHT;
             for (MenuObject menuObject : videoObjects) {
                 if (menuObject instanceof Field) {
                     Field field = (Field)menuObject;
-                    field.setSelected(Constants.SCREEN_WIDTH == field.getScreenWidth() &&
-                            Constants.SCREEN_HEIGHT == field.getScreenHeight());
+                    field.setSelected(MenuSizes.SCREEN_WIDTH == field.getScreenWidth() &&
+                            MenuSizes.SCREEN_HEIGHT == field.getScreenHeight());
                 }
             }
             isSettingsChanged = false;

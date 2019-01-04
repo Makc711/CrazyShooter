@@ -29,8 +29,8 @@ public class PauseMenu {
     }
 
     private void createPauseObjects() {
-        pauseObjects.add(new Background(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT));
-        int buttonStartY = Constants.SCREEN_HEIGHT / 2 - PauseItem.values().length *
+        pauseObjects.add(new Background(0, 0, MenuSizes.SCREEN_WIDTH, MenuSizes.SCREEN_HEIGHT));
+        int buttonStartY = MenuSizes.SCREEN_HEIGHT / 2 - PauseItem.values().length *
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < PauseItem.values().length; i++) {
             MenuButton button = new MenuButton(PauseItem.values()[i], true, PauseItem.values()[i].toString(),

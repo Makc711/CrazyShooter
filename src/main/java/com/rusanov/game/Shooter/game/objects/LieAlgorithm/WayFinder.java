@@ -3,6 +3,7 @@ package com.rusanov.game.Shooter.game.objects.LieAlgorithm;
 import com.rusanov.game.Shooter.game.Constants;
 import com.rusanov.game.Shooter.game.objects.GameObject;
 import com.rusanov.game.Shooter.game.objects.GameObjectType;
+import com.rusanov.game.Shooter.menu.MenuSizes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,8 +12,8 @@ import java.util.List;
 public class WayFinder {
     private int[][] fillMap;
     private List<Point> stack = new ArrayList<>();
-    private int rows = Constants.SCREEN_HEIGHT / Constants.TILE_SIZE;
-    private int columns = Constants.SCREEN_WIDTH / Constants.TILE_SIZE;
+    private int rows = MenuSizes.SCREEN_HEIGHT / Constants.TILE_SIZE;
+    private int columns = MenuSizes.SCREEN_WIDTH / Constants.TILE_SIZE;
     private int[][] coordinatesOfBlocks;
 
     public WayFinder(List<GameObject> objects) {

@@ -3,6 +3,7 @@ package com.rusanov.game.Shooter.game;
 import com.rusanov.game.Shooter.game.objects.GameObject;
 import com.rusanov.game.Shooter.game.objects.GameObjectType;
 import com.rusanov.game.Shooter.game.objects.Player;
+import com.rusanov.game.Shooter.menu.MenuSizes;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -27,9 +28,9 @@ class Level {
     private void createBlock() {
         for (int i = 0; i < Constants.ATTEMPTS_TO_CREATE_BLOCK; i++) {
             int x = ThreadLocalRandom.current().
-                    nextInt(Constants.BLOCK_SIZE_MAX / 2, Constants.SCREEN_WIDTH - Constants.BLOCK_SIZE_MAX / 2 - 1);
+                    nextInt(Constants.BLOCK_SIZE_MAX / 2, MenuSizes.SCREEN_WIDTH - Constants.BLOCK_SIZE_MAX / 2 - 1);
             int y = ThreadLocalRandom.current().
-                    nextInt(Constants.BLOCK_SIZE_MAX / 2, Constants.SCREEN_HEIGHT - Constants.BLOCK_SIZE_MAX / 2 - 1);
+                    nextInt(Constants.BLOCK_SIZE_MAX / 2, MenuSizes.SCREEN_HEIGHT - Constants.BLOCK_SIZE_MAX / 2 - 1);
             if (game.createObject(GameObjectType.BLOCK, x, y) != null) {
                 break;
             }
@@ -41,9 +42,9 @@ class Level {
         Player player;
         do {
             x = ThreadLocalRandom.current().
-                    nextInt(Constants.HUMAN_SIZE / 2, Constants.SCREEN_WIDTH - Constants.HUMAN_SIZE / 2);
+                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_WIDTH - Constants.HUMAN_SIZE / 2);
             y = ThreadLocalRandom.current().
-                    nextInt(Constants.HUMAN_SIZE / 2, Constants.SCREEN_HEIGHT - Constants.HUMAN_SIZE / 2);
+                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_HEIGHT - Constants.HUMAN_SIZE / 2);
             player = (Player)game.createObject(GameObjectType.PLAYER, x, y);
         } while (player == null);
         player.setKeys(ControlItem.KEY_UP.getKeycode(), ControlItem.KEY_DOWN.getKeycode(),
@@ -56,9 +57,9 @@ class Level {
         GameObject enemy;
         do {
             x = ThreadLocalRandom.current().
-                    nextInt(Constants.HUMAN_SIZE / 2, Constants.SCREEN_WIDTH - Constants.HUMAN_SIZE / 2);
+                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_WIDTH - Constants.HUMAN_SIZE / 2);
             y = ThreadLocalRandom.current().
-                    nextInt(Constants.HUMAN_SIZE / 2, Constants.SCREEN_HEIGHT - Constants.HUMAN_SIZE / 2);
+                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_HEIGHT - Constants.HUMAN_SIZE / 2);
             enemy = game.createObject(GameObjectType.ENEMY, x, y);
         } while (enemy == null);
         game.setEnemy(enemy);

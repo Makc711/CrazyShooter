@@ -35,14 +35,14 @@ public class MenuConstructor {
     }
 
     private void createMenuObjects() {
-        int buttonStartY = Constants.SCREEN_HEIGHT / 2 - MainMenuItem.values().length *
+        int buttonStartY = MenuSizes.SCREEN_HEIGHT / 2 - MainMenuItem.values().length *
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < MainMenuItem.values().length; i++) {
             MenuButton button = new MenuButton(MainMenuItem.values()[i], true, MainMenuItem.values()[i].toString(),
                     timesNewRoman, textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             mainMenuObjects.add(button);
         }
-        buttonStartY = Constants.SCREEN_HEIGHT / 2 - OptionsItem.values().length *
+        buttonStartY = MenuSizes.SCREEN_HEIGHT / 2 - OptionsItem.values().length *
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < OptionsItem.values().length; i++) {
             MenuButton button = new MenuButton(OptionsItem.values()[i], true, OptionsItem.values()[i].toString(),
@@ -92,8 +92,8 @@ public class MenuConstructor {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureFont);
         String title = "Authors:";
-        int titleX = Constants.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(title);
-        int titleY = Constants.SCREEN_HEIGHT / 2 - timesNewRoman.getHeight();
+        int titleX = MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(title);
+        int titleY = MenuSizes.SCREEN_HEIGHT / 2 - timesNewRoman.getHeight();
         String author = "Name: Maxim Rusanov";
         String mail = "e-mail: makc93@mail.ru";
         timesNewRoman.drawString(titleX, titleY, title, org.newdawn.slick.Color.black);

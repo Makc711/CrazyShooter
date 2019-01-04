@@ -2,6 +2,7 @@ package com.rusanov.game.Shooter.game.objects;
 
 import com.rusanov.game.Shooter.game.Constants;
 import com.rusanov.game.Shooter.graphics.GameTexture;
+import com.rusanov.game.Shooter.menu.MenuSizes;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -137,7 +138,7 @@ public class Human extends GameObject {
             int y00 = (int)y - Constants.BULLET_SIZE / 2;
             int x01 = x00 + Constants.BULLET_SIZE - 1;
             int y01 = y00 + Constants.BULLET_SIZE - 1;
-            if (targetObject == this || x00 < 0 || y00 < 0 || x01 >= Constants.SCREEN_WIDTH || y01 >= Constants.SCREEN_HEIGHT) {
+            if (targetObject == this || x00 < 0 || y00 < 0 || x01 >= MenuSizes.SCREEN_WIDTH || y01 >= MenuSizes.SCREEN_HEIGHT) {
                 distanceToHuman = -1;
                 break;
             }

@@ -42,7 +42,7 @@ public class Game {
     }
 
     void setupSystem() {
-        new Window(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, Constants.SCREEN_NAME, Constants.FULLSCREEN);
+        new Window(MenuSizes.SCREEN_WIDTH, MenuSizes.SCREEN_HEIGHT, Constants.SCREEN_NAME, MenuSizes.FULLSCREEN);
         textureHuman = new GameTexture("Textures/Human.png");
         Font awtFont = new Font("Times New Roman", Font.BOLD, Constants.FONT_SIZE);
         textureFont = GL11.glGenTextures() + 1;
@@ -143,33 +143,33 @@ public class Game {
         boolean isContinue = false;
         if (player != null && player.getHealth() <= 0) {
             String playerDied = "Player died!";
-            timesNewRoman.drawString(Constants.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(playerDied) / 2,
-                    Constants.SCREEN_HEIGHT / 2 - timesNewRoman.getHeight(playerDied) / 2, playerDied, org.newdawn.slick.Color.green);
+            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(playerDied) / 2,
+                    MenuSizes.SCREEN_HEIGHT / 2 - timesNewRoman.getHeight(playerDied) / 2, playerDied, org.newdawn.slick.Color.green);
             isContinue = true;
         }
         if (enemy != null && enemy.getHealth() <= 0) {
             String enemyDied = "Enemy died!";
-            timesNewRoman.drawString(Constants.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(enemyDied) / 2,
-                    Constants.SCREEN_HEIGHT / 2 + timesNewRoman.getHeight(enemyDied) / 2, enemyDied, org.newdawn.slick.Color.red);
+            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(enemyDied) / 2,
+                    MenuSizes.SCREEN_HEIGHT / 2 + timesNewRoman.getHeight(enemyDied) / 2, enemyDied, org.newdawn.slick.Color.red);
             isContinue = true;
         }
         if (isContinue) {
             String pressSpace = "Press SPACE to continue...";
-            timesNewRoman.drawString(Constants.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(pressSpace) / 2,
-                    Constants.SCREEN_HEIGHT - timesNewRoman.getHeight(pressSpace) *4 , pressSpace, org.newdawn.slick.Color.black);
+            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(pressSpace) / 2,
+                    MenuSizes.SCREEN_HEIGHT - timesNewRoman.getHeight(pressSpace) *4 , pressSpace, org.newdawn.slick.Color.black);
         }
         if (playerPoints >= Constants.MAX_SCORE && enemyPoints < Constants.MAX_SCORE) {
             String playerWin = "YOU ARE WIN!!!";
-            timesNewRoman.drawString(Constants.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(playerWin) / 2,
+            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(playerWin) / 2,
                     timesNewRoman.getHeight(playerWin) *4 , playerWin, org.newdawn.slick.Color.green);
         } else if (enemyPoints >= Constants.MAX_SCORE && playerPoints < Constants.MAX_SCORE) {
             String playerLoose = "YOU ARE LOOSE...";
-            timesNewRoman.drawString(Constants.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(playerLoose) / 2,
+            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(playerLoose) / 2,
                     timesNewRoman.getHeight(playerLoose) *4 , playerLoose, org.newdawn.slick.Color.red);
         }
         if (playerPoints >= Constants.MAX_SCORE && enemyPoints >= Constants.MAX_SCORE) {
             String deadHeat = "DEAD HEAT...";
-            timesNewRoman.drawString(Constants.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(deadHeat) / 2,
+            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(deadHeat) / 2,
                     timesNewRoman.getHeight(deadHeat) *4 , deadHeat, org.newdawn.slick.Color.blue);
         }
 
@@ -269,7 +269,7 @@ public class Game {
         int x1 = x0 + object.getWidth() - 1;
         int y1 = y0 + object.getHeight() - 1;
 
-        if ( x0 < 0 || y0 < 0 || x1 >= Constants.SCREEN_WIDTH || y1 >= Constants.SCREEN_HEIGHT) {
+        if ( x0 < 0 || y0 < 0 || x1 >= MenuSizes.SCREEN_WIDTH || y1 >= MenuSizes.SCREEN_HEIGHT) {
             if (object.getType() == GameObjectType.BULLET) {
                 object.setHealth(0);
             }

@@ -6,9 +6,11 @@ import java.awt.*;
 
 public class Constants {
     static final String SCREEN_NAME = "Crazy Shooter";
-    public static int SCREEN_WIDTH = 800;
-    public static int SCREEN_HEIGHT = 600;
-    public static boolean FULLSCREEN = false;
+
+//    public static boolean FULLSCREEN = false;
+//    public static int SCREEN_WIDTH = 800;
+//    public static int SCREEN_HEIGHT = 600;
+
     public static final int FPS = 60;
     public static final int DISPLAY_BITS_PER_PIXEL_WIN = 32;
     public static final int DISPLAY_BITS_PER_PIXEL_MAC = 24;
