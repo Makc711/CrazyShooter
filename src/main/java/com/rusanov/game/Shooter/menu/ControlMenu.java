@@ -31,7 +31,7 @@ class ControlMenu {
     private void createControlObjects() {
         createOptionsBackground(buttonControl, controlObjects, font, textureFont);
         int keyFieldStartY = MenuSizes.MENU_OPTIONS_Y;
-        try(FileInputStream controlItems = new FileInputStream("src\\main\\resources\\Options\\Control.dat")) {
+        try(FileInputStream controlItems = new FileInputStream(MenuConstants.NAME_OF_CONTROL_SETTINGS)) {
             for (ControlItem controlItem : ControlItem.values()) {
                 controlItem.setKeycode(controlItems.read());
             }
@@ -118,7 +118,7 @@ class ControlMenu {
             }
         }
         if (isSave) {
-            try(FileOutputStream controlItems = new FileOutputStream("src\\main\\resources\\Options\\Control.dat")) {
+            try(FileOutputStream controlItems = new FileOutputStream(MenuConstants.NAME_OF_CONTROL_SETTINGS)) {
                 for (ControlItem controlItem : ControlItem.values()) {
                     controlItems.write(controlItem.getKeycode());
                 }
