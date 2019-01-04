@@ -6,9 +6,9 @@ import com.rusanov.game.Shooter.graphics.Draw;
 import com.rusanov.game.Shooter.menu.Item;
 import com.rusanov.game.Shooter.menu.MenuConstants;
 import com.rusanov.game.Shooter.menu.MenuSizes;
+import com.rusanov.game.Shooter.menu.Restart;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.TrueTypeFont;
 
 import java.awt.*;
 
@@ -18,18 +18,16 @@ public class KeyField extends MenuObject {
     private float blackoutText;
     private boolean isPressed = false;
     private String name;
-    private TrueTypeFont font;
     private int textureFont;
     private Color pressedColor;
     private int keycode;
     private int fieldX;
     private int fieldY;
 
-    public KeyField(Item id, int keycode, String name, TrueTypeFont font, int textureFont, int x, int y) {
+    public KeyField(Item id, int keycode, String name, int textureFont, int x, int y) {
         this.id = id;
         setState(isActive);
         this.keycode = keycode;
-        this.font = font;
         this.textureFont = textureFont;
         this.name = name;
         this.x = x;
@@ -37,7 +35,7 @@ public class KeyField extends MenuObject {
         fieldX = MenuSizes.KEY_FIELD_X;
         fieldY = y - MenuSizes.KEY_FIELD_BORDER_Y;
         width = MenuSizes.KEY_FIELD_WIDTH;
-        height = this.font.getHeight() + 2 * MenuSizes.KEY_FIELD_BORDER_Y;
+        height = Restart.TIMES_NEW_ROMAN.getHeight() + 2 * MenuSizes.KEY_FIELD_BORDER_Y;
     }
 
     private void setState(boolean isActive) {
@@ -56,7 +54,7 @@ public class KeyField extends MenuObject {
 
     @Override
     public void render() {
-        Draw.text(textureFont, font, x, y, name, MenuConstants.TEXT_COLOR);
+        Draw.text(textureFont, Restart.TIMES_NEW_ROMAN, x, y, name, MenuConstants.TEXT_COLOR);
 
         GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), (byte)transparency);
         Draw.filledRectangle(fieldX + MenuSizes.BUTTON_BORDER_WIDTH / 2, fieldY + MenuSizes.BUTTON_BORDER_WIDTH / 2,
@@ -67,7 +65,7 @@ public class KeyField extends MenuObject {
         Draw.rectangle(fieldX, fieldY, width, height, MenuSizes.BUTTON_BORDER_WIDTH);
         GL11.glColor4f(1, 1, 1, 1);
 
-        Draw.text(textureFont, font, fieldX + width / 2 - font.getWidth(Keyboard.getKeyName(keycode)) / 2, y,
+        Draw.text(textureFont, Restart.TIMES_NEW_ROMAN, fieldX + width / 2 - Restart.TIMES_NEW_ROMAN.getWidth(Keyboard.getKeyName(keycode)) / 2, y,
                 Keyboard.getKeyName(keycode), MenuConstants.FIELD_TEXT_COLOR.darker(blackoutText));
     }
 

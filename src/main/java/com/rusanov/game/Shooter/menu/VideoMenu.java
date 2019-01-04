@@ -7,14 +7,12 @@ import com.rusanov.game.Shooter.menu.objects.Checkbox;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.newdawn.slick.TrueTypeFont;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class VideoMenu {
-    private TrueTypeFont font;
+class VideoMenu implements Serializable {
     private int textureFont;
     private List<MenuObject> videoObjects = new ArrayList<>();
     private MenuButton buttonVideo;
@@ -26,29 +24,26 @@ class VideoMenu {
     private int screenHeight = MenuSizes.SCREEN_HEIGHT;
     private Game game;
 
-    VideoMenu(MenuButton buttonVideo, Game game, TrueTypeFont font, int textureFont) {
+    VideoMenu(MenuButton buttonVideo, Game game, int textureFont) {
         this.game = game;
-        this.font = font;
         this.textureFont = textureFont;
         this.buttonVideo = buttonVideo;
         createVideoObjects();
     }
 
     private void createVideoObjects() {
-        ControlMenu.createOptionsBackground(buttonVideo, videoObjects, font, textureFont);
+        ControlMenu.createOptionsBackground(buttonVideo, videoObjects, textureFont);
         int bottomCheckBoxesY = createCheckBoxes();
         createFields(bottomCheckBoxesY);
     }
 
     private int createCheckBoxes() {
         int checkboxY = MenuSizes.MENU_OPTIONS_Y;
-        checkboxFullscreen = new Checkbox("Fullscreen", font, textureFont,
-                MenuSizes.MENU_OPTIONS_X, checkboxY);
+        checkboxFullscreen = new Checkbox("Fullscreen", textureFont, MenuSizes.MENU_OPTIONS_X, checkboxY);
         checkboxFullscreen.setSelected(Display.isFullscreen());
         videoObjects.add(checkboxFullscreen);
         checkboxY += MenuSizes.DISTANCE_BETWEEN_CHECKBOX_Y;
-        checkboxWidescreen = new Checkbox("Widescreen", font, textureFont,
-                MenuSizes.MENU_OPTIONS_X, checkboxY);
+        checkboxWidescreen = new Checkbox("Widescreen", textureFont, MenuSizes.MENU_OPTIONS_X, checkboxY);
         videoObjects.add(checkboxWidescreen);
         checkboxY += MenuSizes.DISTANCE_BETWEEN_CHECKBOX_Y;
         return checkboxY;
@@ -69,7 +64,7 @@ class VideoMenu {
                     if (MenuSizes.SCREEN_WIDTH == current.getWidth() && MenuSizes.SCREEN_HEIGHT == current.getHeight()) {
                         isFieldSelected = true;
                     }
-                    Field field = new Field(font, textureFont, isFieldSelected);
+                    Field field = new Field(textureFont, isFieldSelected);
                     field.setName(nameOfField);
                     field.setScreenWidth(current.getWidth());
                     field.setScreenHeight(current.getHeight());

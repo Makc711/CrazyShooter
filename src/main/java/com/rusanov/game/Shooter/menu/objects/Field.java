@@ -5,8 +5,8 @@ import com.rusanov.game.Shooter.Input;
 import com.rusanov.game.Shooter.graphics.Draw;
 import com.rusanov.game.Shooter.menu.MenuConstants;
 import com.rusanov.game.Shooter.menu.MenuSizes;
+import com.rusanov.game.Shooter.menu.Restart;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.TrueTypeFont;
 
 public class Field extends MenuObject {
     private boolean isVisible;
@@ -14,15 +14,13 @@ public class Field extends MenuObject {
     private boolean isPressed = false;
     private float blackoutText;
     private String name;
-    private TrueTypeFont font;
     private int textureFont;
     private boolean isWidescreen;
     private int screenWidth;
     private int screenHeight;
 
-    public Field(TrueTypeFont font, int textureFont, boolean isSelected) {
+    public Field(int textureFont, boolean isSelected) {
         setState(isSelected);
-        this.font = font;
         this.textureFont = textureFont;
         width = MenuSizes.VIDEO_FIELD_WIDTH;
         height = MenuSizes.VIDEO_FIELD_HEIGHT;
@@ -48,7 +46,8 @@ public class Field extends MenuObject {
             Draw.filledRectangle(x, y, width, height);
             GL11.glColor4f(1, 1, 1, 1);
 
-            Draw.text(textureFont, font, x + width / 2 - font.getWidth(name) / 2, y + height / 2 - font.getHeight() / 2,
+            Draw.text(textureFont, Restart.TIMES_NEW_ROMAN, x + width / 2 - Restart.TIMES_NEW_ROMAN.getWidth(name) / 2,
+                    y + height / 2 - Restart.TIMES_NEW_ROMAN.getHeight() / 2,
                     name, MenuConstants.FIELD_TEXT_COLOR.darker(blackoutText));
         }
     }

@@ -3,8 +3,9 @@ package com.rusanov.game.Shooter.game.objects;
 import com.rusanov.game.Shooter.game.Game;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public abstract class GameObject {
+public abstract class GameObject implements Serializable {
     private Game game;
     private GameObjectType type = GameObjectType.NONE;
     private float x;

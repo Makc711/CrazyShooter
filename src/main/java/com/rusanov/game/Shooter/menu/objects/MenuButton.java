@@ -6,8 +6,8 @@ import com.rusanov.game.Shooter.menu.Item;
 import com.rusanov.game.Shooter.graphics.Draw;
 import com.rusanov.game.Shooter.menu.MenuConstants;
 import com.rusanov.game.Shooter.menu.MenuSizes;
+import com.rusanov.game.Shooter.menu.Restart;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.TrueTypeFont;
 
 import java.awt.*;
 
@@ -16,25 +16,22 @@ public class MenuButton extends MenuObject {
     private boolean isActive;
     private boolean isPressed = false;
     private String name;
-    private TrueTypeFont font;
     private int textureFont;
     private float blackoutText;
     private Color pressedColor;
 
-    public MenuButton(boolean isActive, String name, TrueTypeFont font, int textureFont, int x, int y) {
+    public MenuButton(boolean isActive, String name, int textureFont, int x, int y) {
         setState(isActive);
         this.name = name;
-        this.font = font;
         this.textureFont = textureFont;
         this.x = x;
         this.y = y;
     }
 
-    public MenuButton(Item id, boolean isActive, String name, TrueTypeFont font, int textureFont, int y) {
+    public MenuButton(Item id, boolean isActive, String name, int textureFont, int y) {
         this.id = id;
         setState(isActive);
         this.name = name;
-        this.font = font;
         this.textureFont = textureFont;
         this.y = y;
     }
@@ -63,8 +60,9 @@ public class MenuButton extends MenuObject {
         Draw.rectangle(x, y, width, height, MenuSizes.BUTTON_BORDER_WIDTH);
         GL11.glColor4f(1, 1, 1, 1);
 
-        Draw.text(textureFont, font, x + width / 2 - font.getWidth(name) / 2, y + height / 2 - font.getHeight() / 2,
-                name, MenuConstants.BUTTON_TEXT_COLOR.darker(blackoutText));
+        Draw.text(textureFont, Restart.TIMES_NEW_ROMAN, x + width / 2 - Restart.TIMES_NEW_ROMAN.getWidth(name) / 2,
+                y + height / 2 - Restart.TIMES_NEW_ROMAN.getHeight() / 2, name,
+                MenuConstants.BUTTON_TEXT_COLOR.darker(blackoutText));
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.rusanov.game.Shooter.menu;
 
-import com.rusanov.game.Shooter.game.Constants;
 import com.rusanov.game.Shooter.Input;
 import com.rusanov.game.Shooter.game.ControlItem;
 import com.rusanov.game.Shooter.menu.objects.Background;
@@ -8,28 +7,25 @@ import com.rusanov.game.Shooter.menu.objects.KeyField;
 import com.rusanov.game.Shooter.menu.objects.MenuButton;
 import com.rusanov.game.Shooter.menu.objects.MenuObject;
 import org.lwjgl.input.Keyboard;
-import org.newdawn.slick.TrueTypeFont;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class ControlMenu {
-    private TrueTypeFont font;
+class ControlMenu implements Serializable {
     private int textureFont;
     private List<MenuObject> controlObjects = new ArrayList<>();
     private MenuButton buttonControl;
     private boolean isSettingsChanged = false;
 
-    ControlMenu(MenuButton buttonControl, TrueTypeFont font, int textureFont) {
-        this.font = font;
+    ControlMenu(MenuButton buttonControl, int textureFont) {
         this.textureFont = textureFont;
         this.buttonControl = buttonControl;
         createControlObjects();
     }
 
     private void createControlObjects() {
-        createOptionsBackground(buttonControl, controlObjects, font, textureFont);
+        createOptionsBackground(buttonControl, controlObjects, textureFont);
         int keyFieldStartY = MenuSizes.MENU_OPTIONS_Y;
         try(FileInputStream controlItems = new FileInputStream(MenuConstants.NAME_OF_CONTROL_SETTINGS)) {
             for (ControlItem controlItem : ControlItem.values()) {
@@ -40,7 +36,7 @@ class ControlMenu {
         }
         for (int i = 0; i < ControlItem.values().length; i++) {
             KeyField keyField = new KeyField(ControlItem.values()[i], ControlItem.values()[i].getKeycode(),
-                    ControlItem.values()[i].toString(), font, textureFont,
+                    ControlItem.values()[i].toString(), textureFont,
                     MenuSizes.MENU_OPTIONS_X, keyFieldStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             controlObjects.add(keyField);
         }
@@ -136,7 +132,7 @@ class ControlMenu {
         setAllFieldsActive();
     }
 
-    static void createOptionsBackground(MenuButton buttonParent, List<MenuObject> menuObjects, TrueTypeFont font, int textureFont) {
+    static void createOptionsBackground(MenuButton buttonParent, List<MenuObject> menuObjects, int textureFont) {
         int buttonBackgroundX = MenuSizes.BUTTON_OPTIONS_BORDER_X + MenuSizes.BUTTON_WIDTH;
         int buttonBackgroundY = buttonParent.getY();
         menuObjects.add(new Background(buttonBackgroundX, buttonBackgroundY, MenuSizes.BUTTON_OPTIONS_BORDER_X,
@@ -146,7 +142,7 @@ class ControlMenu {
         int backgroundWidth = MenuSizes.MENU_OPTIONS_BACKGROUND_WIDTH;
         int backgroundHeight = MenuSizes.SCREEN_HEIGHT - 2 * MenuSizes.BUTTON_OPTIONS_BORDER_Y;
         menuObjects.add(new Background(backgroundX, backgroundY, backgroundWidth, backgroundHeight));
-        MenuButton button = new MenuButton(false, "SAVE", font, textureFont,
+        MenuButton button = new MenuButton(false, "SAVE", textureFont,
                 backgroundX + backgroundWidth / 2 - MenuSizes.BUTTON_WIDTH / 2,
                 backgroundY + backgroundHeight - MenuSizes.BUTTON_OPTIONS_BORDER_Y / 2 - MenuSizes.BUTTON_HEIGHT);
         menuObjects.add(button);

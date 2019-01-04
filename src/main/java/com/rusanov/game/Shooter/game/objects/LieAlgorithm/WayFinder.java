@@ -5,11 +5,12 @@ import com.rusanov.game.Shooter.game.objects.GameObject;
 import com.rusanov.game.Shooter.game.objects.GameObjectType;
 import com.rusanov.game.Shooter.menu.MenuSizes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class WayFinder {
+public class WayFinder implements Serializable {
     private int[][] fillMap;
     private List<Point> stack = new ArrayList<>();
     private int rows = MenuSizes.SCREEN_HEIGHT / Constants.TILE_SIZE;

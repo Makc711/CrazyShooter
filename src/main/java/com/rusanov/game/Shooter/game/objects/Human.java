@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Human extends GameObject {
-    private GameTexture textureHuman;
+    private transient GameTexture textureHuman;
     private int textureSize = Constants.HUMAN_TEXTURE_SIZE;
     private float angle = ThreadLocalRandom.current().nextInt(0, 360);
     private float fireCooldownTime = 0;

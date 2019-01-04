@@ -1,5 +1,9 @@
 package com.rusanov.game.Shooter.menu;
 
+import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.TrueTypeFont;
+
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 

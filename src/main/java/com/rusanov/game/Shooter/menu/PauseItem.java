@@ -2,7 +2,8 @@ package com.rusanov.game.Shooter.menu;
 
 public enum PauseItem implements Item {
     CONTINUE("CONTINUE"),
-    CANCEL("CANCEL");
+    CANCEL("CANCEL"),
+    SAVE("SAVE");
 
     private final String name;
 

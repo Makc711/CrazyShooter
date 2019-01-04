@@ -3,8 +3,9 @@ package com.rusanov.game.Shooter.menu.objects;
 import com.rusanov.game.Shooter.menu.MenuSizes;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public abstract class MenuObject {
+public abstract class MenuObject implements Serializable {
     int x = MenuSizes.BUTTON_MENU_X;
     int y = 0;
     int width = MenuSizes.BUTTON_WIDTH;

@@ -1,30 +1,26 @@
 package com.rusanov.game.Shooter.menu;
 
-import com.rusanov.game.Shooter.game.Constants;
 import com.rusanov.game.Shooter.Input;
 import com.rusanov.game.Shooter.game.Game;
 import com.rusanov.game.Shooter.menu.objects.Background;
 import com.rusanov.game.Shooter.menu.objects.MenuButton;
 import com.rusanov.game.Shooter.menu.objects.MenuObject;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.TrueTypeFont;
 
-import java.awt.*;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PauseMenu {
+public class PauseMenu implements Serializable {
     private Game game;
-    private TrueTypeFont timesNewRoman;
     private int textureFont;
     private List<MenuObject> pauseObjects = new ArrayList<>();
 
     public PauseMenu(Game game) {
         this.game = game;
-        Font awtFont = new Font("Times New Roman", Font.BOLD, MenuSizes.MENU_FONT_SIZE);
-        textureFont = GL11.glGenTextures() + 1;
-        timesNewRoman = new TrueTypeFont(awtFont, true);
+        this.textureFont = Restart.TEXTURE_FONT;
         createPauseObjects();
     }
 
@@ -34,7 +30,7 @@ public class PauseMenu {
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < PauseItem.values().length; i++) {
             MenuButton button = new MenuButton(PauseItem.values()[i], true, PauseItem.values()[i].toString(),
-                    timesNewRoman, textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
+                    textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             pauseObjects.add(button);
         }
     }
@@ -63,11 +59,22 @@ public class PauseMenu {
                         case CANCEL:
                             game.setGameState(Game.GameState.MENU);
                             break;
+                        case SAVE:
+                            saveGame();
+                            break;
                         default:
                             System.err.println("Error: Unknown pause menu state \"" + item + "\"!");
                     }
                 }
             }
+        }
+    }
+
+    private void saveGame() {
+        try(ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream(MenuConstants.NAME_OF_SAVE))) {
+            save.writeObject(game);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

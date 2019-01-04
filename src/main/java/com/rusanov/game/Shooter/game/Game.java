@@ -10,24 +10,22 @@ import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.TrueTypeFont;
 
-import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Game {
+public class Game implements Serializable {
     private boolean isGameActive = true;
     private long timeLastFrame = 0;
     private List<GameObject> objects;
-    private GameTexture textureHuman;
+    private transient GameTexture textureHuman;
     private WayFinder wayFinder;
     private GameObject player;
     private GameObject enemy;
     private int playerPoints = 0;
     private int enemyPoints = 0;
-    private TrueTypeFont timesNewRoman;
     private int textureFont;
     private boolean isPlayerDied = false;
     private boolean isEnemyDied = false;
@@ -44,9 +42,8 @@ public class Game {
     void setupSystem() {
         new Window(MenuSizes.SCREEN_WIDTH, MenuSizes.SCREEN_HEIGHT, Constants.SCREEN_NAME, MenuSizes.FULLSCREEN);
         textureHuman = new GameTexture("Textures/Human.png");
-        Font awtFont = new Font("Times New Roman", Font.BOLD, Constants.FONT_SIZE);
-        textureFont = GL11.glGenTextures() + 1;
-        timesNewRoman = new TrueTypeFont(awtFont, true);
+        new Restart();
+        textureFont = Restart.TEXTURE_FONT;
         menuConstructor = new MenuConstructor(this);
         pauseMenu = new PauseMenu(this);
     }
@@ -131,46 +128,46 @@ public class Game {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureFont);
 
         String scorePlayer = String.valueOf(playerPoints);
-        int scorePlayerWidth = timesNewRoman.getWidth(scorePlayer);
-        timesNewRoman.drawString(Constants.SCORE_POSITION_X, Constants.SCORE_POSITION_Y, scorePlayer, org.newdawn.slick.Color.green);
+        int scorePlayerWidth = Restart.TIMES_NEW_ROMAN.getWidth(scorePlayer);
+        Restart.TIMES_NEW_ROMAN.drawString(Constants.SCORE_POSITION_X, Constants.SCORE_POSITION_Y, scorePlayer, org.newdawn.slick.Color.green);
         String delimeter = " : ";
-        int delimeterWidth = timesNewRoman.getWidth(delimeter);
-        timesNewRoman.drawString(Constants.SCORE_POSITION_X + scorePlayerWidth,
+        int delimeterWidth = Restart.TIMES_NEW_ROMAN.getWidth(delimeter);
+        Restart.TIMES_NEW_ROMAN.drawString(Constants.SCORE_POSITION_X + scorePlayerWidth,
                 Constants.SCORE_POSITION_Y, delimeter, org.newdawn.slick.Color.black);
-        timesNewRoman.drawString(Constants.SCORE_POSITION_X + scorePlayerWidth + delimeterWidth,
+        Restart.TIMES_NEW_ROMAN.drawString(Constants.SCORE_POSITION_X + scorePlayerWidth + delimeterWidth,
                 Constants.SCORE_POSITION_Y, String.valueOf(enemyPoints), org.newdawn.slick.Color.red);
 
         boolean isContinue = false;
         if (player != null && player.getHealth() <= 0) {
             String playerDied = "Player died!";
-            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(playerDied) / 2,
-                    MenuSizes.SCREEN_HEIGHT / 2 - timesNewRoman.getHeight(playerDied) / 2, playerDied, org.newdawn.slick.Color.green);
+            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(playerDied) / 2,
+                    MenuSizes.SCREEN_HEIGHT / 2 - Restart.TIMES_NEW_ROMAN.getHeight(playerDied) / 2, playerDied, org.newdawn.slick.Color.green);
             isContinue = true;
         }
         if (enemy != null && enemy.getHealth() <= 0) {
             String enemyDied = "Enemy died!";
-            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(enemyDied) / 2,
-                    MenuSizes.SCREEN_HEIGHT / 2 + timesNewRoman.getHeight(enemyDied) / 2, enemyDied, org.newdawn.slick.Color.red);
+            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(enemyDied) / 2,
+                    MenuSizes.SCREEN_HEIGHT / 2 + Restart.TIMES_NEW_ROMAN.getHeight(enemyDied) / 2, enemyDied, org.newdawn.slick.Color.red);
             isContinue = true;
         }
         if (isContinue) {
             String pressSpace = "Press SPACE to continue...";
-            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(pressSpace) / 2,
-                    MenuSizes.SCREEN_HEIGHT - timesNewRoman.getHeight(pressSpace) *4 , pressSpace, org.newdawn.slick.Color.black);
+            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(pressSpace) / 2,
+                    MenuSizes.SCREEN_HEIGHT - Restart.TIMES_NEW_ROMAN.getHeight(pressSpace) *4 , pressSpace, org.newdawn.slick.Color.black);
         }
         if (playerPoints >= Constants.MAX_SCORE && enemyPoints < Constants.MAX_SCORE) {
             String playerWin = "YOU ARE WIN!!!";
-            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(playerWin) / 2,
-                    timesNewRoman.getHeight(playerWin) *4 , playerWin, org.newdawn.slick.Color.green);
+            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(playerWin) / 2,
+                    Restart.TIMES_NEW_ROMAN.getHeight(playerWin) *4 , playerWin, org.newdawn.slick.Color.green);
         } else if (enemyPoints >= Constants.MAX_SCORE && playerPoints < Constants.MAX_SCORE) {
             String playerLoose = "YOU ARE LOOSE...";
-            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(playerLoose) / 2,
-                    timesNewRoman.getHeight(playerLoose) *4 , playerLoose, org.newdawn.slick.Color.red);
+            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(playerLoose) / 2,
+                    Restart.TIMES_NEW_ROMAN.getHeight(playerLoose) *4 , playerLoose, org.newdawn.slick.Color.red);
         }
         if (playerPoints >= Constants.MAX_SCORE && enemyPoints >= Constants.MAX_SCORE) {
             String deadHeat = "DEAD HEAT...";
-            timesNewRoman.drawString(MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(deadHeat) / 2,
-                    timesNewRoman.getHeight(deadHeat) *4 , deadHeat, org.newdawn.slick.Color.blue);
+            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(deadHeat) / 2,
+                    Restart.TIMES_NEW_ROMAN.getHeight(deadHeat) *4 , deadHeat, org.newdawn.slick.Color.blue);
         }
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);

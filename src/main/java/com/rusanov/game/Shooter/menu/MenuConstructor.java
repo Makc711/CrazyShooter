@@ -7,15 +7,13 @@ import com.rusanov.game.Shooter.menu.objects.MenuButton;
 import com.rusanov.game.Shooter.menu.objects.MenuObject;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.TrueTypeFont;
 
-import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuConstructor {
+public class MenuConstructor implements Serializable {
     private Game game;
-    private TrueTypeFont timesNewRoman;
     private int textureFont;
     private List<MenuObject> mainMenuObjects = new ArrayList<>();
     private List<MenuObject> optionsObjects = new ArrayList<>();
@@ -29,8 +27,7 @@ public class MenuConstructor {
 
     public MenuConstructor(Game game) {
         this.game = game;
-        textureFont = GL11.glGenTextures() + 1;
-        timesNewRoman = new TrueTypeFont(new Font("Times New Roman", Font.BOLD, MenuSizes.MENU_FONT_SIZE), true);
+        textureFont = Restart.TEXTURE_FONT;
         createMenuObjects();
     }
 
@@ -39,21 +36,21 @@ public class MenuConstructor {
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < MainMenuItem.values().length; i++) {
             MenuButton button = new MenuButton(MainMenuItem.values()[i], true, MainMenuItem.values()[i].toString(),
-                    timesNewRoman, textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
+                    textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             mainMenuObjects.add(button);
         }
         buttonStartY = MenuSizes.SCREEN_HEIGHT / 2 - OptionsItem.values().length *
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < OptionsItem.values().length; i++) {
             MenuButton button = new MenuButton(OptionsItem.values()[i], true, OptionsItem.values()[i].toString(),
-                    timesNewRoman, textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
+                    textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             button.setX(MenuSizes.BUTTON_OPTIONS_BORDER_X);
             optionsObjects.add(button);
             if (OptionsItem.values()[i] == OptionsItem.CONTROL) {
                 button.setPressed(true);
-                controlMenu = new ControlMenu(button, timesNewRoman, textureFont);
+                controlMenu = new ControlMenu(button, textureFont);
             } else if (OptionsItem.values()[i] == OptionsItem.VIDEO) {
-                videoMenu = new VideoMenu(button, game, timesNewRoman, textureFont);
+                videoMenu = new VideoMenu(button, game, textureFont);
             }
         }
     }
@@ -92,13 +89,13 @@ public class MenuConstructor {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureFont);
         String title = "Authors:";
-        int titleX = MenuSizes.SCREEN_WIDTH / 2 - timesNewRoman.getWidth(title);
-        int titleY = MenuSizes.SCREEN_HEIGHT / 2 - timesNewRoman.getHeight();
+        int titleX = MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(title);
+        int titleY = MenuSizes.SCREEN_HEIGHT / 2 - Restart.TIMES_NEW_ROMAN.getHeight();
         String author = "Name: Maxim Rusanov";
         String mail = "e-mail: makc93@mail.ru";
-        timesNewRoman.drawString(titleX, titleY, title, org.newdawn.slick.Color.black);
-        timesNewRoman.drawString(titleX, titleY + timesNewRoman.getHeight(), author, org.newdawn.slick.Color.black);
-        timesNewRoman.drawString(titleX, titleY + 2 * timesNewRoman.getHeight(), mail, org.newdawn.slick.Color.black);
+        Restart.TIMES_NEW_ROMAN.drawString(titleX, titleY, title, org.newdawn.slick.Color.black);
+        Restart.TIMES_NEW_ROMAN.drawString(titleX, titleY + Restart.TIMES_NEW_ROMAN.getHeight(), author, org.newdawn.slick.Color.black);
+        Restart.TIMES_NEW_ROMAN.drawString(titleX, titleY + 2 * Restart.TIMES_NEW_ROMAN.getHeight(), mail, org.newdawn.slick.Color.black);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
     }
