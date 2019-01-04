@@ -29,9 +29,8 @@ public class MenuConstructor {
 
     public MenuConstructor(Game game) {
         this.game = game;
-        Font awtFont = new Font("Times New Roman", Font.BOLD, MenuSizes.MENU_FONT_SIZE);
         textureFont = GL11.glGenTextures() + 1;
-        timesNewRoman = new TrueTypeFont(awtFont, true);
+        timesNewRoman = new TrueTypeFont(new Font("Times New Roman", Font.BOLD, MenuSizes.MENU_FONT_SIZE), true);
         createMenuObjects();
     }
 
@@ -39,22 +38,16 @@ public class MenuConstructor {
         int buttonStartY = Constants.SCREEN_HEIGHT / 2 - MainMenuItem.values().length *
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < MainMenuItem.values().length; i++) {
-            MenuButton button = new MenuButton(MainMenuItem.values()[i], true);
-            button.setY(buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
-            button.setName(MainMenuItem.values()[i].toString());
-            button.setFont(timesNewRoman);
-            button.setTextureFont(textureFont);
+            MenuButton button = new MenuButton(MainMenuItem.values()[i], true, MainMenuItem.values()[i].toString(),
+                    timesNewRoman, textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             mainMenuObjects.add(button);
         }
         buttonStartY = Constants.SCREEN_HEIGHT / 2 - OptionsItem.values().length *
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < OptionsItem.values().length; i++) {
-            MenuButton button = new MenuButton(OptionsItem.values()[i], true);
+            MenuButton button = new MenuButton(OptionsItem.values()[i], true, OptionsItem.values()[i].toString(),
+                    timesNewRoman, textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             button.setX(MenuSizes.BUTTON_OPTIONS_BORDER_X);
-            button.setY(buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
-            button.setName(OptionsItem.values()[i].toString());
-            button.setFont(timesNewRoman);
-            button.setTextureFont(textureFont);
             optionsObjects.add(button);
             if (OptionsItem.values()[i] == OptionsItem.CONTROL) {
                 button.setPressed(true);

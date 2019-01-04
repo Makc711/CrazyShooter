@@ -21,13 +21,22 @@ public class MenuButton extends MenuObject {
     private float blackoutText;
     private Color pressedColor;
 
-    public MenuButton(Item id, boolean isActive) {
-        this.id = id;
+    public MenuButton(boolean isActive, String name, TrueTypeFont font, int textureFont, int x, int y) {
         setState(isActive);
+        this.name = name;
+        this.font = font;
+        this.textureFont = textureFont;
+        this.x = x;
+        this.y = y;
     }
 
-    public MenuButton(boolean isActive) {
+    public MenuButton(Item id, boolean isActive, String name, TrueTypeFont font, int textureFont, int y) {
+        this.id = id;
         setState(isActive);
+        this.name = name;
+        this.font = font;
+        this.textureFont = textureFont;
+        this.y = y;
     }
 
     private void setState(boolean isActive) {
@@ -92,17 +101,5 @@ public class MenuButton extends MenuObject {
 
     public void setPressed(boolean pressed) {
         isPressed = pressed;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setFont(TrueTypeFont font) {
-        this.font = font;
-    }
-
-    public void setTextureFont(int textureFont) {
-        this.textureFont = textureFont;
     }
 }

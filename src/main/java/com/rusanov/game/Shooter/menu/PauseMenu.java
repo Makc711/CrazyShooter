@@ -33,11 +33,8 @@ public class PauseMenu {
         int buttonStartY = Constants.SCREEN_HEIGHT / 2 - PauseItem.values().length *
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < PauseItem.values().length; i++) {
-            MenuButton button = new MenuButton(PauseItem.values()[i], true);
-            button.setY(buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
-            button.setName(PauseItem.values()[i].toString());
-            button.setFont(timesNewRoman);
-            button.setTextureFont(textureFont);
+            MenuButton button = new MenuButton(PauseItem.values()[i], true, PauseItem.values()[i].toString(),
+                    timesNewRoman, textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             pauseObjects.add(button);
         }
     }

@@ -37,7 +37,7 @@ public class KeyField extends MenuObject {
         fieldX = MenuSizes.KEY_FIELD_X;
         fieldY = y - MenuSizes.KEY_FIELD_BORDER_Y;
         width = MenuSizes.KEY_FIELD_WIDTH;
-        height = font.getHeight() + 2 * MenuSizes.KEY_FIELD_BORDER_Y;
+        height = this.font.getHeight() + 2 * MenuSizes.KEY_FIELD_BORDER_Y;
     }
 
     private void setState(boolean isActive) {
@@ -88,6 +88,11 @@ public class KeyField extends MenuObject {
             }
         }
         color = isPressed ? pressedColor.darker() : pressedColor;
+    }
+
+    @Override
+    public String toString(){
+        return name;
     }
 
     // GETTERS AND SETTERS

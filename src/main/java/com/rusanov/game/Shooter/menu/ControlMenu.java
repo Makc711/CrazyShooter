@@ -10,6 +10,7 @@ import com.rusanov.game.Shooter.menu.objects.MenuObject;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.TrueTypeFont;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,13 @@ class ControlMenu {
     private void createControlObjects() {
         createOptionsBackground(buttonControl, controlObjects, font, textureFont);
         int keyFieldStartY = MenuSizes.MENU_OPTIONS_Y;
+        try(FileInputStream controlItems = new FileInputStream("src\\main\\resources\\Options\\Control.dat")) {
+            for (ControlItem controlItem : ControlItem.values()) {
+                controlItem.setKeycode(controlItems.read());
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < ControlItem.values().length; i++) {
             KeyField keyField = new KeyField(ControlItem.values()[i], ControlItem.values()[i].getKeycode(),
                     ControlItem.values()[i].toString(), font, textureFont,
@@ -102,16 +110,20 @@ class ControlMenu {
         for (MenuObject menuObject : controlObjects) {
             if (menuObject instanceof KeyField) {
                 KeyField keyField = (KeyField)menuObject;
-                for (ControlItem controlItem : ControlItem.values()) {
-                    if (keyField.getId() == controlItem) {
-                        if (isSave) {
-                            controlItem.setKeycode(keyField.getKeycode());
-                        } else {
-                            keyField.setKeycode(controlItem.getKeycode());
-                        }
-                        break;
-                    }
+                if (isSave) {
+                    ((ControlItem)keyField.getId()).setKeycode(keyField.getKeycode());
+                } else {
+                    keyField.setKeycode(((ControlItem)keyField.getId()).getKeycode());
                 }
+            }
+        }
+        if (isSave) {
+            try(FileOutputStream controlItems = new FileOutputStream("src\\main\\resources\\Options\\Control.dat")) {
+                for (ControlItem controlItem : ControlItem.values()) {
+                    controlItems.write(controlItem.getKeycode());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -134,12 +146,9 @@ class ControlMenu {
         int backgroundWidth = MenuSizes.MENU_OPTIONS_BACKGROUND_WIDTH;
         int backgroundHeight = Constants.SCREEN_HEIGHT - 2 * MenuSizes.BUTTON_OPTIONS_BORDER_Y;
         menuObjects.add(new Background(backgroundX, backgroundY, backgroundWidth, backgroundHeight));
-        MenuButton button = new MenuButton(false);
-        button.setX(backgroundX + backgroundWidth / 2 - MenuSizes.BUTTON_WIDTH / 2);
-        button.setY(backgroundY + backgroundHeight - MenuSizes.BUTTON_OPTIONS_BORDER_Y / 2 - MenuSizes.BUTTON_HEIGHT);
-        button.setName("SAVE");
-        button.setFont(font);
-        button.setTextureFont(textureFont);
+        MenuButton button = new MenuButton(false, "SAVE", font, textureFont,
+                backgroundX + backgroundWidth / 2 - MenuSizes.BUTTON_WIDTH / 2,
+                backgroundY + backgroundHeight - MenuSizes.BUTTON_OPTIONS_BORDER_Y / 2 - MenuSizes.BUTTON_HEIGHT);
         menuObjects.add(button);
     }
 }

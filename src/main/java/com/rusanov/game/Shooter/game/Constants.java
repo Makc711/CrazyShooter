@@ -5,7 +5,7 @@ import org.lwjgl.input.Keyboard;
 import java.awt.*;
 
 public class Constants {
-    static final String SCREEN_NAME = "Shooter";
+    static final String SCREEN_NAME = "Crazy Shooter";
     public static int SCREEN_WIDTH = 800;
     public static int SCREEN_HEIGHT = 600;
     public static boolean FULLSCREEN = false;
