@@ -18,17 +18,15 @@ public class KeyField extends MenuObject {
     private float blackoutText;
     private boolean isPressed = false;
     private String name;
-    private int textureFont;
     private Color pressedColor;
     private int keycode;
     private int fieldX;
     private int fieldY;
 
-    public KeyField(Item id, int keycode, String name, int textureFont, int x, int y) {
+    public KeyField(Item id, int keycode, String name, int x, int y) {
         this.id = id;
         setState(isActive);
         this.keycode = keycode;
-        this.textureFont = textureFont;
         this.name = name;
         this.x = x;
         this.y = y;
@@ -54,7 +52,7 @@ public class KeyField extends MenuObject {
 
     @Override
     public void render() {
-        Draw.text(textureFont, Restart.TIMES_NEW_ROMAN, x, y, name, MenuConstants.TEXT_COLOR);
+        Draw.text(Restart.TEXTURE_FONT, Restart.TIMES_NEW_ROMAN, x, y, name, MenuConstants.TEXT_COLOR);
 
         GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), (byte)transparency);
         Draw.filledRectangle(fieldX + MenuSizes.BUTTON_BORDER_WIDTH / 2, fieldY + MenuSizes.BUTTON_BORDER_WIDTH / 2,
@@ -65,7 +63,7 @@ public class KeyField extends MenuObject {
         Draw.rectangle(fieldX, fieldY, width, height, MenuSizes.BUTTON_BORDER_WIDTH);
         GL11.glColor4f(1, 1, 1, 1);
 
-        Draw.text(textureFont, Restart.TIMES_NEW_ROMAN, fieldX + width / 2 - Restart.TIMES_NEW_ROMAN.getWidth(Keyboard.getKeyName(keycode)) / 2, y,
+        Draw.text(Restart.TEXTURE_FONT, Restart.TIMES_NEW_ROMAN, fieldX + width / 2 - Restart.TIMES_NEW_ROMAN.getWidth(Keyboard.getKeyName(keycode)) / 2, y,
                 Keyboard.getKeyName(keycode), MenuConstants.FIELD_TEXT_COLOR.darker(blackoutText));
     }
 

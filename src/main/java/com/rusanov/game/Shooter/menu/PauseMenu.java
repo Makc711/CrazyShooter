@@ -15,12 +15,10 @@ import java.util.List;
 
 public class PauseMenu implements Serializable {
     private Game game;
-    private int textureFont;
     private List<MenuObject> pauseObjects = new ArrayList<>();
 
     public PauseMenu(Game game) {
         this.game = game;
-        this.textureFont = Restart.TEXTURE_FONT;
         createPauseObjects();
     }
 
@@ -30,7 +28,7 @@ public class PauseMenu implements Serializable {
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < PauseItem.values().length; i++) {
             MenuButton button = new MenuButton(PauseItem.values()[i], true, PauseItem.values()[i].toString(),
-                    textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
+                    buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             pauseObjects.add(button);
         }
     }

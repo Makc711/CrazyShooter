@@ -16,23 +16,20 @@ public class MenuButton extends MenuObject {
     private boolean isActive;
     private boolean isPressed = false;
     private String name;
-    private int textureFont;
     private float blackoutText;
     private Color pressedColor;
 
-    public MenuButton(boolean isActive, String name, int textureFont, int x, int y) {
+    public MenuButton(boolean isActive, String name, int x, int y) {
         setState(isActive);
         this.name = name;
-        this.textureFont = textureFont;
         this.x = x;
         this.y = y;
     }
 
-    public MenuButton(Item id, boolean isActive, String name, int textureFont, int y) {
+    public MenuButton(Item id, boolean isActive, String name, int y) {
         this.id = id;
         setState(isActive);
         this.name = name;
-        this.textureFont = textureFont;
         this.y = y;
     }
 
@@ -60,7 +57,7 @@ public class MenuButton extends MenuObject {
         Draw.rectangle(x, y, width, height, MenuSizes.BUTTON_BORDER_WIDTH);
         GL11.glColor4f(1, 1, 1, 1);
 
-        Draw.text(textureFont, Restart.TIMES_NEW_ROMAN, x + width / 2 - Restart.TIMES_NEW_ROMAN.getWidth(name) / 2,
+        Draw.text(Restart.TEXTURE_FONT, Restart.TIMES_NEW_ROMAN, x + width / 2 - Restart.TIMES_NEW_ROMAN.getWidth(name) / 2,
                 y + height / 2 - Restart.TIMES_NEW_ROMAN.getHeight() / 2, name,
                 MenuConstants.BUTTON_TEXT_COLOR.darker(blackoutText));
     }

@@ -14,14 +14,12 @@ public class Field extends MenuObject {
     private boolean isPressed = false;
     private float blackoutText;
     private String name;
-    private int textureFont;
     private boolean isWidescreen;
     private int screenWidth;
     private int screenHeight;
 
-    public Field(int textureFont, boolean isSelected) {
+    public Field(boolean isSelected) {
         setState(isSelected);
-        this.textureFont = textureFont;
         width = MenuSizes.VIDEO_FIELD_WIDTH;
         height = MenuSizes.VIDEO_FIELD_HEIGHT;
     }
@@ -46,7 +44,7 @@ public class Field extends MenuObject {
             Draw.filledRectangle(x, y, width, height);
             GL11.glColor4f(1, 1, 1, 1);
 
-            Draw.text(textureFont, Restart.TIMES_NEW_ROMAN, x + width / 2 - Restart.TIMES_NEW_ROMAN.getWidth(name) / 2,
+            Draw.text(Restart.TEXTURE_FONT, Restart.TIMES_NEW_ROMAN, x + width / 2 - Restart.TIMES_NEW_ROMAN.getWidth(name) / 2,
                     y + height / 2 - Restart.TIMES_NEW_ROMAN.getHeight() / 2,
                     name, MenuConstants.FIELD_TEXT_COLOR.darker(blackoutText));
         }

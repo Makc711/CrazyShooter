@@ -13,13 +13,11 @@ public class Checkbox extends MenuObject {
     private boolean isSelected = false;
     private boolean isPressed = false;
     private String name;
-    private int textureFont;
     private int checkboxX;
     private int checkboxY;
 
-    public Checkbox(String name, int textureFont, int x, int y) {
+    public Checkbox(String name, int x, int y) {
         this.name = name;
-        this.textureFont = textureFont;
         width = MenuSizes.CHECKBOX_SIZE;
         this.x = x;
         this.y = y;
@@ -31,7 +29,7 @@ public class Checkbox extends MenuObject {
 
     @Override
     public void render() {
-        Draw.text(textureFont, Restart.TIMES_NEW_ROMAN, x, y, name, Color.black);
+        Draw.text(Restart.TEXTURE_FONT, Restart.TIMES_NEW_ROMAN, x, y, name, Color.black);
 
         GL11.glColor3ub((byte)Color.black.getRed(), (byte)Color.black.getGreen(), (byte)Color.black.getBlue());
         Draw.filledCircle(checkboxX, checkboxY, width, 16);

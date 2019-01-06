@@ -14,7 +14,6 @@ import java.util.List;
 
 public class MenuConstructor implements Serializable {
     private Game game;
-    private int textureFont;
     private List<MenuObject> mainMenuObjects = new ArrayList<>();
     private List<MenuObject> optionsObjects = new ArrayList<>();
     private MenuState menuState = MenuState.MAIN_MENU;
@@ -27,7 +26,6 @@ public class MenuConstructor implements Serializable {
 
     public MenuConstructor(Game game) {
         this.game = game;
-        textureFont = Restart.TEXTURE_FONT;
         createMenuObjects();
     }
 
@@ -36,21 +34,21 @@ public class MenuConstructor implements Serializable {
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < MainMenuItem.values().length; i++) {
             MenuButton button = new MenuButton(MainMenuItem.values()[i], true, MainMenuItem.values()[i].toString(),
-                    textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
+                    buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             mainMenuObjects.add(button);
         }
         buttonStartY = MenuSizes.SCREEN_HEIGHT / 2 - OptionsItem.values().length *
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < OptionsItem.values().length; i++) {
             MenuButton button = new MenuButton(OptionsItem.values()[i], true, OptionsItem.values()[i].toString(),
-                    textureFont, buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
+                    buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             button.setX(MenuSizes.BUTTON_OPTIONS_BORDER_X);
             optionsObjects.add(button);
             if (OptionsItem.values()[i] == OptionsItem.CONTROL) {
                 button.setPressed(true);
-                controlMenu = new ControlMenu(button, textureFont);
+                controlMenu = new ControlMenu(button);
             } else if (OptionsItem.values()[i] == OptionsItem.VIDEO) {
-                videoMenu = new VideoMenu(button, game, textureFont);
+                videoMenu = new VideoMenu(button, game);
             }
         }
     }
@@ -87,7 +85,7 @@ public class MenuConstructor implements Serializable {
 
     private void renderAuthors() {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureFont);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, Restart.TEXTURE_FONT);
         String title = "Authors:";
         int titleX = MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(title);
         int titleY = MenuSizes.SCREEN_HEIGHT / 2 - Restart.TIMES_NEW_ROMAN.getHeight();

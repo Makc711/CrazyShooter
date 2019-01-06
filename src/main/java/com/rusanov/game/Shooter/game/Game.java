@@ -26,7 +26,6 @@ public class Game implements Serializable {
     private GameObject enemy;
     private int playerPoints = 0;
     private int enemyPoints = 0;
-    private int textureFont;
     private boolean isPlayerDied = false;
     private boolean isEnemyDied = false;
     private boolean isReload = false;
@@ -43,7 +42,6 @@ public class Game implements Serializable {
         new Window(MenuSizes.SCREEN_WIDTH, MenuSizes.SCREEN_HEIGHT, Constants.SCREEN_NAME, MenuSizes.FULLSCREEN);
         textureHuman = new GameTexture("Textures/Human.png");
         new Restart();
-        textureFont = Restart.TEXTURE_FONT;
         menuConstructor = new MenuConstructor(this);
         pauseMenu = new PauseMenu(this);
     }
@@ -125,7 +123,7 @@ public class Game implements Serializable {
 
     private void drawText() {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureFont);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, Restart.TEXTURE_FONT);
 
         String scorePlayer = String.valueOf(playerPoints);
         int scorePlayerWidth = Restart.TIMES_NEW_ROMAN.getWidth(scorePlayer);

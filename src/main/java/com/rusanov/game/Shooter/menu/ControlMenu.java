@@ -13,19 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ControlMenu implements Serializable {
-    private int textureFont;
     private List<MenuObject> controlObjects = new ArrayList<>();
     private MenuButton buttonControl;
     private boolean isSettingsChanged = false;
 
-    ControlMenu(MenuButton buttonControl, int textureFont) {
-        this.textureFont = textureFont;
+    ControlMenu(MenuButton buttonControl) {
         this.buttonControl = buttonControl;
         createControlObjects();
     }
 
     private void createControlObjects() {
-        createOptionsBackground(buttonControl, controlObjects, textureFont);
+        createOptionsBackground(buttonControl, controlObjects);
         int keyFieldStartY = MenuSizes.MENU_OPTIONS_Y;
         try(FileInputStream controlItems = new FileInputStream(MenuConstants.NAME_OF_CONTROL_SETTINGS)) {
             for (ControlItem controlItem : ControlItem.values()) {
@@ -36,7 +34,7 @@ class ControlMenu implements Serializable {
         }
         for (int i = 0; i < ControlItem.values().length; i++) {
             KeyField keyField = new KeyField(ControlItem.values()[i], ControlItem.values()[i].getKeycode(),
-                    ControlItem.values()[i].toString(), textureFont,
+                    ControlItem.values()[i].toString(),
                     MenuSizes.MENU_OPTIONS_X, keyFieldStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             controlObjects.add(keyField);
         }
@@ -132,7 +130,7 @@ class ControlMenu implements Serializable {
         setAllFieldsActive();
     }
 
-    static void createOptionsBackground(MenuButton buttonParent, List<MenuObject> menuObjects, int textureFont) {
+    static void createOptionsBackground(MenuButton buttonParent, List<MenuObject> menuObjects) {
         int buttonBackgroundX = MenuSizes.BUTTON_OPTIONS_BORDER_X + MenuSizes.BUTTON_WIDTH;
         int buttonBackgroundY = buttonParent.getY();
         menuObjects.add(new Background(buttonBackgroundX, buttonBackgroundY, MenuSizes.BUTTON_OPTIONS_BORDER_X,
@@ -142,7 +140,7 @@ class ControlMenu implements Serializable {
         int backgroundWidth = MenuSizes.MENU_OPTIONS_BACKGROUND_WIDTH;
         int backgroundHeight = MenuSizes.SCREEN_HEIGHT - 2 * MenuSizes.BUTTON_OPTIONS_BORDER_Y;
         menuObjects.add(new Background(backgroundX, backgroundY, backgroundWidth, backgroundHeight));
-        MenuButton button = new MenuButton(false, "SAVE", textureFont,
+        MenuButton button = new MenuButton(false, "SAVE",
                 backgroundX + backgroundWidth / 2 - MenuSizes.BUTTON_WIDTH / 2,
                 backgroundY + backgroundHeight - MenuSizes.BUTTON_OPTIONS_BORDER_Y / 2 - MenuSizes.BUTTON_HEIGHT);
         menuObjects.add(button);
