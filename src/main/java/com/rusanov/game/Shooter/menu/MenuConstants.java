@@ -47,5 +47,5 @@ public class MenuConstants {
 
     static final String NAME_OF_CONTROL_SETTINGS = "src\\main\\resources\\Options\\Control.dat";
     static final String NAME_OF_VIDEO_SETTINGS = "src\\main\\resources\\Options\\Video.dat";
-    static final String NAME_OF_SAVE = "src\\main\\resources\\Saves\\Save.dat";
+    public static final String NAME_OF_SAVE = "src\\main\\resources\\Saves\\Save.dat";
 }

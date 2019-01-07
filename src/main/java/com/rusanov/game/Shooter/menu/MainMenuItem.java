@@ -2,6 +2,7 @@ package com.rusanov.game.Shooter.menu;
 
 public enum MainMenuItem implements Item {
     NEW_GAME("NEW GAME"),
+    LOAD("LOAD"),
     OPTIONS("OPTIONS"),
     AUTHORS("AUTHORS"),
     EXIT("EXIT");

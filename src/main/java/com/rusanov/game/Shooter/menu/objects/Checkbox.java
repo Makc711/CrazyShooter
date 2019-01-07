@@ -5,7 +5,7 @@ import com.rusanov.game.Shooter.Input;
 import com.rusanov.game.Shooter.graphics.Draw;
 import com.rusanov.game.Shooter.menu.MenuConstants;
 import com.rusanov.game.Shooter.menu.MenuSizes;
-import com.rusanov.game.Shooter.menu.Restart;
+import com.rusanov.game.Shooter.menu.FontGame;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 
@@ -21,15 +21,15 @@ public class Checkbox extends MenuObject {
         width = MenuSizes.CHECKBOX_SIZE;
         this.x = x;
         this.y = y;
-        checkboxX = x + Restart.TIMES_NEW_ROMAN.getWidth(name) + width;
-        checkboxY = y + Restart.TIMES_NEW_ROMAN.getHeight() / 2;
+        checkboxX = x + FontGame.TIMES_NEW_ROMAN.getWidth(name) + width;
+        checkboxY = y + FontGame.TIMES_NEW_ROMAN.getHeight() / 2;
         color = MenuConstants.BUTTON_ACTIVE_COLOR;
         transparency = MenuConstants.BUTTON_TRANSPARENCY;
     }
 
     @Override
     public void render() {
-        Draw.text(Restart.TEXTURE_FONT, Restart.TIMES_NEW_ROMAN, x, y, name, Color.black);
+        Draw.text(FontGame.TEXTURE_FONT, FontGame.TIMES_NEW_ROMAN, x, y, name, Color.black);
 
         GL11.glColor3ub((byte)Color.black.getRed(), (byte)Color.black.getGreen(), (byte)Color.black.getBlue());
         Draw.filledCircle(checkboxX, checkboxY, width, 16);

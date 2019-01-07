@@ -6,7 +6,7 @@ import com.rusanov.game.Shooter.graphics.Draw;
 import com.rusanov.game.Shooter.menu.Item;
 import com.rusanov.game.Shooter.menu.MenuConstants;
 import com.rusanov.game.Shooter.menu.MenuSizes;
-import com.rusanov.game.Shooter.menu.Restart;
+import com.rusanov.game.Shooter.menu.FontGame;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -33,7 +33,7 @@ public class KeyField extends MenuObject {
         fieldX = MenuSizes.KEY_FIELD_X;
         fieldY = y - MenuSizes.KEY_FIELD_BORDER_Y;
         width = MenuSizes.KEY_FIELD_WIDTH;
-        height = Restart.TIMES_NEW_ROMAN.getHeight() + 2 * MenuSizes.KEY_FIELD_BORDER_Y;
+        height = FontGame.TIMES_NEW_ROMAN.getHeight() + 2 * MenuSizes.KEY_FIELD_BORDER_Y;
     }
 
     private void setState(boolean isActive) {
@@ -52,7 +52,7 @@ public class KeyField extends MenuObject {
 
     @Override
     public void render() {
-        Draw.text(Restart.TEXTURE_FONT, Restart.TIMES_NEW_ROMAN, x, y, name, MenuConstants.TEXT_COLOR);
+        Draw.text(FontGame.TEXTURE_FONT, FontGame.TIMES_NEW_ROMAN, x, y, name, MenuConstants.TEXT_COLOR);
 
         GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), (byte)transparency);
         Draw.filledRectangle(fieldX + MenuSizes.BUTTON_BORDER_WIDTH / 2, fieldY + MenuSizes.BUTTON_BORDER_WIDTH / 2,
@@ -63,7 +63,7 @@ public class KeyField extends MenuObject {
         Draw.rectangle(fieldX, fieldY, width, height, MenuSizes.BUTTON_BORDER_WIDTH);
         GL11.glColor4f(1, 1, 1, 1);
 
-        Draw.text(Restart.TEXTURE_FONT, Restart.TIMES_NEW_ROMAN, fieldX + width / 2 - Restart.TIMES_NEW_ROMAN.getWidth(Keyboard.getKeyName(keycode)) / 2, y,
+        Draw.text(FontGame.TEXTURE_FONT, FontGame.TIMES_NEW_ROMAN, fieldX + width / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(Keyboard.getKeyName(keycode)) / 2, y,
                 Keyboard.getKeyName(keycode), MenuConstants.FIELD_TEXT_COLOR.darker(blackoutText));
     }
 

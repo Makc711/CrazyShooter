@@ -219,4 +219,8 @@ public class Human extends GameObject {
     void setAngle(float angle) {
         this.angle = angle;
     }
+
+    public void setTextureHuman(GameTexture textureHuman) {
+        this.textureHuman = textureHuman;
+    }
 }

@@ -3,6 +3,7 @@ package com.rusanov.game.Shooter.menu;
 import com.rusanov.game.Shooter.game.Constants;
 import com.rusanov.game.Shooter.Input;
 import com.rusanov.game.Shooter.game.Game;
+import com.rusanov.game.Shooter.game.Main;
 import com.rusanov.game.Shooter.menu.objects.MenuButton;
 import com.rusanov.game.Shooter.menu.objects.MenuObject;
 import org.lwjgl.input.Keyboard;
@@ -85,15 +86,15 @@ public class MenuConstructor implements Serializable {
 
     private void renderAuthors() {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, Restart.TEXTURE_FONT);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, FontGame.TEXTURE_FONT);
         String title = "Authors:";
-        int titleX = MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(title);
-        int titleY = MenuSizes.SCREEN_HEIGHT / 2 - Restart.TIMES_NEW_ROMAN.getHeight();
+        int titleX = MenuSizes.SCREEN_WIDTH / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(title);
+        int titleY = MenuSizes.SCREEN_HEIGHT / 2 - FontGame.TIMES_NEW_ROMAN.getHeight();
         String author = "Name: Maxim Rusanov";
         String mail = "e-mail: makc93@mail.ru";
-        Restart.TIMES_NEW_ROMAN.drawString(titleX, titleY, title, org.newdawn.slick.Color.black);
-        Restart.TIMES_NEW_ROMAN.drawString(titleX, titleY + Restart.TIMES_NEW_ROMAN.getHeight(), author, org.newdawn.slick.Color.black);
-        Restart.TIMES_NEW_ROMAN.drawString(titleX, titleY + 2 * Restart.TIMES_NEW_ROMAN.getHeight(), mail, org.newdawn.slick.Color.black);
+        FontGame.TIMES_NEW_ROMAN.drawString(titleX, titleY, title, org.newdawn.slick.Color.black);
+        FontGame.TIMES_NEW_ROMAN.drawString(titleX, titleY + FontGame.TIMES_NEW_ROMAN.getHeight(), author, org.newdawn.slick.Color.black);
+        FontGame.TIMES_NEW_ROMAN.drawString(titleX, titleY + 2 * FontGame.TIMES_NEW_ROMAN.getHeight(), mail, org.newdawn.slick.Color.black);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
     }
@@ -129,6 +130,9 @@ public class MenuConstructor implements Serializable {
                         case NEW_GAME:
                             game.initialize();
                             game.setGameState(Game.GameState.PLAY);
+                            break;
+                        case LOAD:
+                            Main.loadGame();
                             break;
                         case OPTIONS:
                             menuState = MenuState.OPTIONS;

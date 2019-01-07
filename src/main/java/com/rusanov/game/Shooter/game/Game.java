@@ -41,9 +41,15 @@ public class Game implements Serializable {
     void setupSystem() {
         new Window(MenuSizes.SCREEN_WIDTH, MenuSizes.SCREEN_HEIGHT, Constants.SCREEN_NAME, MenuSizes.FULLSCREEN);
         textureHuman = new GameTexture("Textures/Human.png");
-        new Restart();
+        new FontGame();
         menuConstructor = new MenuConstructor(this);
         pauseMenu = new PauseMenu(this);
+    }
+
+    void loadTextures() {
+        textureHuman = new GameTexture("Textures/Human.png");
+        ((Human)player).setTextureHuman(textureHuman);
+        ((Human)enemy).setTextureHuman(textureHuman);
     }
 
     public void initialize() {
@@ -123,49 +129,49 @@ public class Game implements Serializable {
 
     private void drawText() {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, Restart.TEXTURE_FONT);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, FontGame.TEXTURE_FONT);
 
         String scorePlayer = String.valueOf(playerPoints);
-        int scorePlayerWidth = Restart.TIMES_NEW_ROMAN.getWidth(scorePlayer);
-        Restart.TIMES_NEW_ROMAN.drawString(Constants.SCORE_POSITION_X, Constants.SCORE_POSITION_Y, scorePlayer, org.newdawn.slick.Color.green);
+        int scorePlayerWidth = FontGame.TIMES_NEW_ROMAN.getWidth(scorePlayer);
+        FontGame.TIMES_NEW_ROMAN.drawString(Constants.SCORE_POSITION_X, Constants.SCORE_POSITION_Y, scorePlayer, org.newdawn.slick.Color.green);
         String delimeter = " : ";
-        int delimeterWidth = Restart.TIMES_NEW_ROMAN.getWidth(delimeter);
-        Restart.TIMES_NEW_ROMAN.drawString(Constants.SCORE_POSITION_X + scorePlayerWidth,
+        int delimeterWidth = FontGame.TIMES_NEW_ROMAN.getWidth(delimeter);
+        FontGame.TIMES_NEW_ROMAN.drawString(Constants.SCORE_POSITION_X + scorePlayerWidth,
                 Constants.SCORE_POSITION_Y, delimeter, org.newdawn.slick.Color.black);
-        Restart.TIMES_NEW_ROMAN.drawString(Constants.SCORE_POSITION_X + scorePlayerWidth + delimeterWidth,
+        FontGame.TIMES_NEW_ROMAN.drawString(Constants.SCORE_POSITION_X + scorePlayerWidth + delimeterWidth,
                 Constants.SCORE_POSITION_Y, String.valueOf(enemyPoints), org.newdawn.slick.Color.red);
 
         boolean isContinue = false;
         if (player != null && player.getHealth() <= 0) {
             String playerDied = "Player died!";
-            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(playerDied) / 2,
-                    MenuSizes.SCREEN_HEIGHT / 2 - Restart.TIMES_NEW_ROMAN.getHeight(playerDied) / 2, playerDied, org.newdawn.slick.Color.green);
+            FontGame.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(playerDied) / 2,
+                    MenuSizes.SCREEN_HEIGHT / 2 - FontGame.TIMES_NEW_ROMAN.getHeight(playerDied) / 2, playerDied, org.newdawn.slick.Color.green);
             isContinue = true;
         }
         if (enemy != null && enemy.getHealth() <= 0) {
             String enemyDied = "Enemy died!";
-            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(enemyDied) / 2,
-                    MenuSizes.SCREEN_HEIGHT / 2 + Restart.TIMES_NEW_ROMAN.getHeight(enemyDied) / 2, enemyDied, org.newdawn.slick.Color.red);
+            FontGame.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(enemyDied) / 2,
+                    MenuSizes.SCREEN_HEIGHT / 2 + FontGame.TIMES_NEW_ROMAN.getHeight(enemyDied) / 2, enemyDied, org.newdawn.slick.Color.red);
             isContinue = true;
         }
         if (isContinue) {
             String pressSpace = "Press SPACE to continue...";
-            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(pressSpace) / 2,
-                    MenuSizes.SCREEN_HEIGHT - Restart.TIMES_NEW_ROMAN.getHeight(pressSpace) *4 , pressSpace, org.newdawn.slick.Color.black);
+            FontGame.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(pressSpace) / 2,
+                    MenuSizes.SCREEN_HEIGHT - FontGame.TIMES_NEW_ROMAN.getHeight(pressSpace) *4 , pressSpace, org.newdawn.slick.Color.black);
         }
         if (playerPoints >= Constants.MAX_SCORE && enemyPoints < Constants.MAX_SCORE) {
             String playerWin = "YOU ARE WIN!!!";
-            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(playerWin) / 2,
-                    Restart.TIMES_NEW_ROMAN.getHeight(playerWin) *4 , playerWin, org.newdawn.slick.Color.green);
+            FontGame.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(playerWin) / 2,
+                    FontGame.TIMES_NEW_ROMAN.getHeight(playerWin) *4 , playerWin, org.newdawn.slick.Color.green);
         } else if (enemyPoints >= Constants.MAX_SCORE && playerPoints < Constants.MAX_SCORE) {
             String playerLoose = "YOU ARE LOOSE...";
-            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(playerLoose) / 2,
-                    Restart.TIMES_NEW_ROMAN.getHeight(playerLoose) *4 , playerLoose, org.newdawn.slick.Color.red);
+            FontGame.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(playerLoose) / 2,
+                    FontGame.TIMES_NEW_ROMAN.getHeight(playerLoose) *4 , playerLoose, org.newdawn.slick.Color.red);
         }
         if (playerPoints >= Constants.MAX_SCORE && enemyPoints >= Constants.MAX_SCORE) {
             String deadHeat = "DEAD HEAT...";
-            Restart.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - Restart.TIMES_NEW_ROMAN.getWidth(deadHeat) / 2,
-                    Restart.TIMES_NEW_ROMAN.getHeight(deadHeat) *4 , deadHeat, org.newdawn.slick.Color.blue);
+            FontGame.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(deadHeat) / 2,
+                    FontGame.TIMES_NEW_ROMAN.getHeight(deadHeat) *4 , deadHeat, org.newdawn.slick.Color.blue);
         }
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);

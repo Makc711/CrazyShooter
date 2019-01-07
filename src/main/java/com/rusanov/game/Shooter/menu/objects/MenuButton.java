@@ -6,7 +6,7 @@ import com.rusanov.game.Shooter.menu.Item;
 import com.rusanov.game.Shooter.graphics.Draw;
 import com.rusanov.game.Shooter.menu.MenuConstants;
 import com.rusanov.game.Shooter.menu.MenuSizes;
-import com.rusanov.game.Shooter.menu.Restart;
+import com.rusanov.game.Shooter.menu.FontGame;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -57,8 +57,8 @@ public class MenuButton extends MenuObject {
         Draw.rectangle(x, y, width, height, MenuSizes.BUTTON_BORDER_WIDTH);
         GL11.glColor4f(1, 1, 1, 1);
 
-        Draw.text(Restart.TEXTURE_FONT, Restart.TIMES_NEW_ROMAN, x + width / 2 - Restart.TIMES_NEW_ROMAN.getWidth(name) / 2,
-                y + height / 2 - Restart.TIMES_NEW_ROMAN.getHeight() / 2, name,
+        Draw.text(FontGame.TEXTURE_FONT, FontGame.TIMES_NEW_ROMAN, x + width / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(name) / 2,
+                y + height / 2 - FontGame.TIMES_NEW_ROMAN.getHeight() / 2, name,
                 MenuConstants.BUTTON_TEXT_COLOR.darker(blackoutText));
     }
 
