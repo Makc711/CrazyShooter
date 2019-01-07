@@ -81,6 +81,11 @@ public class MenuButton extends MenuObject {
         color = isPressed ? pressedColor.darker() : pressedColor;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     // GETTERS AND SETTERS
     public Item getId() {
         return id;

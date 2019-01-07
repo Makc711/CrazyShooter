@@ -2,6 +2,7 @@ package com.rusanov.game.Shooter.menu;
 
 import com.rusanov.game.Shooter.Input;
 import com.rusanov.game.Shooter.game.Game;
+import com.rusanov.game.Shooter.game.Main;
 import com.rusanov.game.Shooter.menu.objects.Background;
 import com.rusanov.game.Shooter.menu.objects.MenuButton;
 import com.rusanov.game.Shooter.menu.objects.MenuObject;
@@ -57,6 +58,9 @@ public class PauseMenu implements Serializable {
                         case SAVE:
                             saveGame();
                             break;
+                        case LOAD:
+                            Main.loadGame();
+                            break;
                         case CANCEL:
                             game.setGameState(Game.GameState.MENU);
                             game.resetGameProgress();
@@ -70,10 +74,15 @@ public class PauseMenu implements Serializable {
     }
 
     private void saveGame() {
-        try(ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream(MenuConstants.NAME_OF_SAVE))) {
+        try (ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream(MenuConstants.NAME_OF_SAVE))) {
+            game.getMenuConstructor().setButtonLoadActive(true);
             save.writeObject(game);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    List<MenuObject> getPauseObjects() {
+        return pauseObjects;
     }
 }

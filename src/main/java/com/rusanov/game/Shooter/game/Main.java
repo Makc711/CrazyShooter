@@ -3,8 +3,7 @@ package com.rusanov.game.Shooter.game;
 import com.rusanov.game.Shooter.menu.MenuConstants;
 import com.rusanov.game.Shooter.menu.MenuSizes;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
+import java.io.*;
 
 public class Main {
     private static Game game;
@@ -25,11 +24,14 @@ public class Main {
     }
 
     public static void loadGame(){
-        try(ObjectInputStream save = new ObjectInputStream(new FileInputStream(MenuConstants.NAME_OF_SAVE))) {
+        try (ObjectInputStream save = new ObjectInputStream(new FileInputStream(MenuConstants.NAME_OF_SAVE))) {
             game = (Game)save.readObject();
             game.loadTextures();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            game.getMenuConstructor().setButtonLoadActive(false);
+            File file = new File(MenuConstants.NAME_OF_SAVE);
+            System.out.println("Файл " + MenuConstants.NAME_OF_SAVE + (file.delete() ? " удален" : " не обнаружен"));
         }
     }
 }

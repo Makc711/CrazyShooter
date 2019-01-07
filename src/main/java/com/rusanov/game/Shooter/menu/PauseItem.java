@@ -3,6 +3,7 @@ package com.rusanov.game.Shooter.menu;
 public enum PauseItem implements Item {
     CONTINUE("CONTINUE"),
     SAVE("SAVE"),
+    LOAD("LOAD"),
     CANCEL("CANCEL");
 
     private final String name;

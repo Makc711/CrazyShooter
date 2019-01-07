@@ -44,6 +44,7 @@ public class Game implements Serializable {
         new FontGame();
         menuConstructor = new MenuConstructor(this);
         pauseMenu = new PauseMenu(this);
+        menuConstructor.checkSave();
     }
 
     void loadTextures() {
@@ -338,6 +339,14 @@ public class Game implements Serializable {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public MenuConstructor getMenuConstructor() {
+        return menuConstructor;
+    }
+
+    public PauseMenu getPauseMenu() {
+        return pauseMenu;
     }
 
     public void exit() {

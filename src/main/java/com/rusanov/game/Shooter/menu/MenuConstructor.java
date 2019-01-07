@@ -9,6 +9,7 @@ import com.rusanov.game.Shooter.menu.objects.MenuObject;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,31 @@ public class MenuConstructor implements Serializable {
                 controlMenu = new ControlMenu(button);
             } else if (OptionsItem.values()[i] == OptionsItem.VIDEO) {
                 videoMenu = new VideoMenu(button, game);
+            }
+        }
+    }
+
+    public void checkSave() {
+        File file = new File(MenuConstants.NAME_OF_SAVE);
+        if (!file.exists()) {
+            setButtonLoadActive(false);
+        }
+    }
+
+    public void setButtonLoadActive(boolean isActive) {
+        for (MenuObject menuObject : mainMenuObjects) {
+            setButtonLoadStatus(menuObject, isActive);
+        }
+        for (MenuObject menuObject : game.getPauseMenu().getPauseObjects()) {
+            setButtonLoadStatus(menuObject, isActive);
+        }
+    }
+
+    private void setButtonLoadStatus(MenuObject menuObject, boolean isActive) {
+        if (menuObject instanceof MenuButton) {
+            MenuButton button = (MenuButton) menuObject;
+            if (button.toString().equals("LOAD")) {
+                button.setActive(isActive);
             }
         }
     }
