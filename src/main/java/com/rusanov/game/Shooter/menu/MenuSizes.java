@@ -1,5 +1,6 @@
 package com.rusanov.game.Shooter.menu;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
@@ -37,7 +38,9 @@ public class MenuSizes {
     static int VIDEO_FIELD_X;
 
     public MenuSizes() {
-        try(ObjectInputStream videoSettings = new ObjectInputStream(new FileInputStream(MenuConstants.NAME_OF_VIDEO_SETTINGS))) {
+        String videoSettingsFullName = new File(MenuConstants.NAME_OF_OPTIONS_DIRECTORY +
+                MenuConstants.NAME_OF_VIDEO_SETTINGS).getAbsolutePath();
+        try(ObjectInputStream videoSettings = new ObjectInputStream(new FileInputStream(videoSettingsFullName))) {
             FULLSCREEN = videoSettings.readBoolean();
             SCREEN_WIDTH = videoSettings.readInt();
             SCREEN_HEIGHT = videoSettings.readInt();

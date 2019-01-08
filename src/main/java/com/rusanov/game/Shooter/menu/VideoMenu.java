@@ -147,7 +147,15 @@ class VideoMenu implements Serializable {
     }
 
     private void saveSettings() {
-        try(ObjectOutputStream videoSettings = new ObjectOutputStream(new FileOutputStream(MenuConstants.NAME_OF_VIDEO_SETTINGS))) {
+        File videoSettingsFolder = new File(MenuConstants.NAME_OF_OPTIONS_DIRECTORY);
+        if (!videoSettingsFolder.exists()) {
+            if (videoSettingsFolder.mkdirs()) {
+                System.out.println("Папка: " + videoSettingsFolder + " создана!");
+            }
+        }
+        String videoSettingsFullName = new File(MenuConstants.NAME_OF_OPTIONS_DIRECTORY +
+                MenuConstants.NAME_OF_VIDEO_SETTINGS).getAbsolutePath();
+        try(ObjectOutputStream videoSettings = new ObjectOutputStream(new FileOutputStream(videoSettingsFullName))) {
             videoSettings.writeBoolean(isFullscreen);
             videoSettings.writeInt(screenWidth);
             videoSettings.writeInt(screenHeight);

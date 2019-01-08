@@ -25,7 +25,9 @@ class ControlMenu implements Serializable {
     private void createControlObjects() {
         createOptionsBackground(buttonControl, controlObjects);
         int keyFieldStartY = MenuSizes.MENU_OPTIONS_Y;
-        try(FileInputStream controlItems = new FileInputStream(MenuConstants.NAME_OF_CONTROL_SETTINGS)) {
+        String controlSettingsFullName = new File(MenuConstants.NAME_OF_OPTIONS_DIRECTORY +
+                MenuConstants.NAME_OF_CONTROL_SETTINGS).getAbsolutePath();
+        try(FileInputStream controlItems = new FileInputStream(controlSettingsFullName)) {
             for (ControlItem controlItem : ControlItem.values()) {
                 controlItem.setKeycode(controlItems.read());
             }
@@ -100,6 +102,7 @@ class ControlMenu implements Serializable {
         }
     }
 
+
     private void saveSettings(boolean isSave) {
         for (MenuObject menuObject : controlObjects) {
             if (menuObject instanceof KeyField) {
@@ -112,9 +115,17 @@ class ControlMenu implements Serializable {
             }
         }
         if (isSave) {
-            try(FileOutputStream controlItems = new FileOutputStream(MenuConstants.NAME_OF_CONTROL_SETTINGS)) {
+            File controlSettingsFolder = new File(MenuConstants.NAME_OF_OPTIONS_DIRECTORY);
+            if (!controlSettingsFolder.exists()) {
+                if (controlSettingsFolder.mkdirs()) {
+                    System.out.println("Папка: " + controlSettingsFolder + " создана!");
+                }
+            }
+            String controlSettingsFullName = new File(MenuConstants.NAME_OF_OPTIONS_DIRECTORY +
+                    MenuConstants.NAME_OF_CONTROL_SETTINGS).getAbsolutePath();
+            try(FileOutputStream outputStream = new FileOutputStream(controlSettingsFullName)) {
                 for (ControlItem controlItem : ControlItem.values()) {
-                    controlItems.write(controlItem.getKeycode());
+                    outputStream.write(controlItem.getKeycode());
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -13,6 +13,7 @@ public class Enemy extends Human {
         super(GameObjectType.ENEMY, textureHuman, Constants.ENEMY_COLOR);
         setSpeed(Constants.ENEMY_SPEED);
         setInvulnerable(true);
+        this.setHealth(Constants.ENEMY_HEALTH);
     }
 
     @Override

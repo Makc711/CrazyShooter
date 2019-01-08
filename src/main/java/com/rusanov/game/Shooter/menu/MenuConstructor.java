@@ -56,7 +56,9 @@ public class MenuConstructor implements Serializable {
     }
 
     public void checkSave() {
-        File file = new File(MenuConstants.NAME_OF_SAVE);
+        String saveFileFullName = new File(MenuConstants.NAME_OF_SAVE_DIRECTORY +
+                MenuConstants.NAME_OF_SAVE).getAbsolutePath();
+        File file = new File(saveFileFullName);
         if (!file.exists()) {
             setButtonLoadActive(false);
         }

@@ -38,9 +38,11 @@ public class Constants {
 
     public static final Color PLAYER_COLOR = Color.GREEN;
     public static final int PLAYER_SPEED = 100;
+    public static final int PLAYER_HEALTH = 1;
 
     public static final Color ENEMY_COLOR = Color.RED;
     public static final int ENEMY_SPEED = 100;
+    public static final int ENEMY_HEALTH = 1;
     public static final float ENEMY_ANALYZE_TIME = 1.5f;
     public static final int ENEMY_START_WAIT = 3;
     public static final int MAXIMUM_FIRE_DISTANCE = 10_000;

@@ -24,14 +24,16 @@ public class Main {
     }
 
     public static void loadGame(){
-        try (ObjectInputStream save = new ObjectInputStream(new FileInputStream(MenuConstants.NAME_OF_SAVE))) {
+        String saveFileFullName = new File(MenuConstants.NAME_OF_SAVE_DIRECTORY +
+                MenuConstants.NAME_OF_SAVE).getAbsolutePath();
+        try (ObjectInputStream save = new ObjectInputStream(new FileInputStream(saveFileFullName))) {
             game = (Game)save.readObject();
             game.loadTextures();
         } catch (Exception e) {
             e.printStackTrace();
             game.getMenuConstructor().setButtonLoadActive(false);
-            File file = new File(MenuConstants.NAME_OF_SAVE);
-            System.out.println("Файл " + MenuConstants.NAME_OF_SAVE + (file.delete() ? " удален" : " не обнаружен"));
+            File file = new File(saveFileFullName);
+            System.out.println("Файл " + saveFileFullName + (file.delete() ? " удален" : " не обнаружен"));
         }
     }
 }

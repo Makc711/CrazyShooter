@@ -8,6 +8,7 @@ import com.rusanov.game.Shooter.menu.objects.MenuButton;
 import com.rusanov.game.Shooter.menu.objects.MenuObject;
 import org.lwjgl.input.Keyboard;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -74,7 +75,15 @@ public class PauseMenu implements Serializable {
     }
 
     private void saveGame() {
-        try (ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream(MenuConstants.NAME_OF_SAVE))) {
+        File saveFolder = new File(MenuConstants.NAME_OF_SAVE_DIRECTORY);
+        if (!saveFolder.exists()) {
+            if (saveFolder.mkdirs()) {
+                System.out.println("Папка: " + saveFolder + " создана!");
+            }
+        }
+        String saveFileFullName = new File(MenuConstants.NAME_OF_SAVE_DIRECTORY +
+                MenuConstants.NAME_OF_SAVE).getAbsolutePath();
+        try (ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream(saveFileFullName))) {
             game.getMenuConstructor().setButtonLoadActive(true);
             save.writeObject(game);
         } catch (Exception e) {
