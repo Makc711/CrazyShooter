@@ -20,7 +20,8 @@ public class Game implements Serializable {
     private boolean isGameActive = true;
     private long timeLastFrame = 0;
     private List<GameObject> objects;
-    private transient GameTexture textureHuman;
+    //private transient GameTexture textureHuman;
+    private transient GameTexture[] textures;
     private WayFinder wayFinder;
     private GameObject player;
     private GameObject enemy;
@@ -40,7 +41,7 @@ public class Game implements Serializable {
 
     void setupSystem() {
         new Window(MenuSizes.SCREEN_WIDTH, MenuSizes.SCREEN_HEIGHT, Constants.SCREEN_NAME, MenuSizes.FULLSCREEN);
-        textureHuman = new GameTexture("Textures/Human.png");
+        loadTextures();
         new FontGame();
         menuConstructor = new MenuConstructor(this);
         pauseMenu = new PauseMenu(this);
@@ -48,9 +49,14 @@ public class Game implements Serializable {
     }
 
     void loadTextures() {
-        textureHuman = new GameTexture("Textures/Human.png");
-        ((Human)player).setTextureHuman(textureHuman);
-        ((Human)enemy).setTextureHuman(textureHuman);
+        GameTexture textureHuman1 = new GameTexture(Constants.TEXTURE_HUMAN1);
+        GameTexture textureHuman2 = new GameTexture(Constants.TEXTURE_HUMAN2);
+        textures = new GameTexture[] { textureHuman1, textureHuman2 };
+    }
+
+    void setTextures() {
+        ((Human)player).setTextureHuman();
+        ((Human)enemy).setTextureHuman();
     }
 
     public void initialize() {
@@ -70,17 +76,17 @@ public class Game implements Serializable {
         GL11.glLoadIdentity();
         switch (gameState) {
             case MENU:
-                setCursor("Textures/CursorHand.png", 3, 26);
+                setCursor(Constants.TEXTURE_CURSOR_HAND, 3, 26);
                 menuConstructor.render();
                 menuConstructor.update();
                 break;
             case PLAY:
-                setCursor("Textures/CursorAim.png", 16, 16);
+                setCursor(Constants.TEXTURE_CURSOR_AIM, 16, 16);
                 render();
                 update(deltaTime);
                 break;
             case PAUSE:
-                setCursor("Textures/CursorHand.png", 3, 26);
+                setCursor(Constants.TEXTURE_CURSOR_HAND, 3, 26);
                 render();
                 pauseMenu.render();
                 pauseMenu.update();
@@ -239,10 +245,10 @@ public class Game implements Serializable {
                 }
                 break;
             case PLAYER:
-                object = new Player(textureHuman);
+                object = new Player(textures[1]);
                 break;
             case ENEMY:
-                object = new Enemy(textureHuman);
+                object = new Enemy(textures[1]);
                 break;
             case BULLET:
                 object = new Bullet();
@@ -347,6 +353,10 @@ public class Game implements Serializable {
 
     public PauseMenu getPauseMenu() {
         return pauseMenu;
+    }
+
+    public GameTexture[] getTextures() {
+        return textures;
     }
 
     public void exit() {

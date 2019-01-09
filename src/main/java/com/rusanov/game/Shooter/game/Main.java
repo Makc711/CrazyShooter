@@ -29,6 +29,7 @@ public class Main {
         try (ObjectInputStream save = new ObjectInputStream(new FileInputStream(saveFileFullName))) {
             game = (Game)save.readObject();
             game.loadTextures();
+            game.setTextures();
         } catch (Exception e) {
             e.printStackTrace();
             game.getMenuConstructor().setButtonLoadActive(false);

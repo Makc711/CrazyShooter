@@ -1,8 +1,8 @@
 package com.rusanov.game.Shooter.game.objects;
 
 import com.rusanov.game.Shooter.game.Constants;
-import com.rusanov.game.Shooter.graphics.GameTexture;
 import com.rusanov.game.Shooter.game.objects.LieAlgorithm.Point;
+import com.rusanov.game.Shooter.graphics.GameTexture;
 
 import java.util.concurrent.ThreadLocalRandom;
 

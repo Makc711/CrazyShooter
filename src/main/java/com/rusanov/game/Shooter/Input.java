@@ -58,7 +58,7 @@ public class Input {
                 Cursor cursor = new Cursor(image.getWidth(), image.getHeight(), xHotSpot, yHotSpot, 1, imageBuffer, null);
                 Mouse.setNativeCursor(cursor);
             } catch (RuntimeException | IOException e) {
-                System.err.println("Can't read file: " + imageName + ".png");
+                System.err.println("Can't read file: " + imageName);
                 e.printStackTrace();
                 Mouse.setNativeCursor(null);
             }

@@ -38,11 +38,11 @@ public class Constants {
 
     public static final Color PLAYER_COLOR = Color.GREEN;
     public static final int PLAYER_SPEED = 100;
-    public static final int PLAYER_HEALTH = 1;
+    public static final int PLAYER_HEALTH = 2;
 
     public static final Color ENEMY_COLOR = Color.RED;
     public static final int ENEMY_SPEED = 100;
-    public static final int ENEMY_HEALTH = 1;
+    public static final int ENEMY_HEALTH = 2;
     public static final float ENEMY_ANALYZE_TIME = 1.5f;
     public static final int ENEMY_START_WAIT = 3;
     public static final int MAXIMUM_FIRE_DISTANCE = 10_000;
@@ -50,5 +50,10 @@ public class Constants {
     public static final int BULLET_SIZE = 8;
     public static final int BULLET_SPEED = 300;
     public static final int DAMAGE_FROM_BULLET = 1;
+
+    static final String TEXTURE_CURSOR_HAND = "Textures/CursorHand.png";
+    static final String TEXTURE_CURSOR_AIM = "Textures/CursorAim.png";
+    static final String TEXTURE_HUMAN1 = "Textures/Human1.png";
+    static final String TEXTURE_HUMAN2 = "Textures/Human2.png";
 }
 

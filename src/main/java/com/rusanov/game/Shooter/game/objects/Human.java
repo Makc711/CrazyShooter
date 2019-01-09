@@ -36,6 +36,7 @@ public class Human extends GameObject {
 
     @Override
     public void update(float deltaTime) {
+        setTextureHuman();
         super.update(deltaTime);
         if (fireCooldownTime > 0) {
             fireCooldownTime -= deltaTime;
@@ -220,7 +221,7 @@ public class Human extends GameObject {
         this.angle = angle;
     }
 
-    public void setTextureHuman(GameTexture textureHuman) {
-        this.textureHuman = textureHuman;
+    public void setTextureHuman() {
+        textureHuman = getGame().getTextures()[(getHealth() == 1) ? 0 : 1];
     }
 }
