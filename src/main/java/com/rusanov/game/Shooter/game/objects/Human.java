@@ -118,17 +118,12 @@ public class Human extends GameObject {
         return new float[]{x, y};
     }
 
-    float[] distanceTo(GameObjectType humanType) {
+    TargetObject distanceTo(GameObjectType humanType) {
         float[] position = calculateFrontCellPosition();
         float x = position[0];
         float y = position[1];
         GameObject targetObject = checkIntersectsWithBullet(x, y);
-        GameObjectType targetObjectType;
-        if (targetObject != null) {
-            targetObjectType = targetObject.getType();
-        } else {
-            targetObjectType = GameObjectType.NONE;
-        }
+        GameObjectType targetObjectType = (targetObject != null) ? targetObject.getType() : GameObjectType.NONE;
         float distanceToHuman = 0;
         float distanceToBlock = 0;
         float distanceToHumanBullet = 0;
@@ -173,7 +168,7 @@ public class Human extends GameObject {
             float dX = Math.abs(x - oldX);
             float dY = Math.abs(y - oldY);
             distanceToHuman += (float)Math.sqrt(dX * dX + dY * dY);
-            if (distanceToHuman > Constants.MAXIMUM_FIRE_DISTANCE) {
+            if (distanceToHuman > Constants.MAXIMUM_FIRE_DISTANCE || targetObjectType == this.getType()) {
                 distanceToHuman = -1;
                 break;
             }
@@ -185,7 +180,7 @@ public class Human extends GameObject {
                 targetObjectType = GameObjectType.NONE;
             }
         }
-        return new float[]{distanceToHuman, distanceToBlock, distanceToHumanBullet};
+        return new TargetObject(targetObject, distanceToHuman, distanceToBlock, distanceToHumanBullet);
     }
 
     @SuppressWarnings("all")

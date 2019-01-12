@@ -22,7 +22,7 @@ class Level {
             createBlock();
         }
         createPlayer();
-        createEnemy();
+        createEnemies();
     }
 
     private void createBlock() {
@@ -42,9 +42,9 @@ class Level {
         Player player;
         do {
             x = ThreadLocalRandom.current().
-                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_WIDTH - Constants.HUMAN_SIZE / 2);
+                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_WIDTH - Constants.HUMAN_SIZE / 2 + 1);
             y = ThreadLocalRandom.current().
-                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_HEIGHT - Constants.HUMAN_SIZE / 2);
+                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_HEIGHT - Constants.HUMAN_SIZE / 2 + 1);
             player = (Player)game.createObject(GameObjectType.PLAYER, x, y);
         } while (player == null);
         player.setKeys(ControlItem.KEY_UP.getKeycode(), ControlItem.KEY_DOWN.getKeycode(),
@@ -52,16 +52,17 @@ class Level {
         game.setPlayer(player);
     }
 
-    private void createEnemy() {
-        int x, y;
-        GameObject enemy;
-        do {
-            x = ThreadLocalRandom.current().
-                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_WIDTH - Constants.HUMAN_SIZE / 2);
-            y = ThreadLocalRandom.current().
-                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_HEIGHT - Constants.HUMAN_SIZE / 2);
-            enemy = game.createObject(GameObjectType.ENEMY, x, y);
-        } while (enemy == null);
-        game.setEnemy(enemy);
+    private void createEnemies() {
+        for (int i = 0; i < Constants.ENEMIES_ON_LEVEL; i++) {
+            GameObject enemy;
+            do {
+                int x = ThreadLocalRandom.current().
+                        nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_WIDTH - Constants.HUMAN_SIZE / 2 + 1);
+                int y = ThreadLocalRandom.current().
+                        nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_HEIGHT - Constants.HUMAN_SIZE / 2 + 1);
+                enemy = game.createObject(GameObjectType.ENEMY, x, y);
+            } while (enemy == null);
+            game.addEnemy(enemy, i);
+        }
     }
 }

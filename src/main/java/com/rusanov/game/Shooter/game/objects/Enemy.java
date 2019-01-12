@@ -23,14 +23,14 @@ public class Enemy extends Human {
 
         if (analyzeTime > 0) {
             analyzeTime -= deltaTime;
-            if (player != null && player.isKillEnemy()) {
+            if (player != null && player.getTargetObject() == this) {
                 move(Direction.DOWN_LEFT);
             }
         } else {
             if (isInvulnerable()) {
                 setInvulnerable(false);
             }
-            if (player != null && player.isKillEnemy()) {
+            if (player != null && player.getTargetObject() == this) {
                 player.protectEnemy();
             }
             analyzeTime = Constants.ENEMY_ANALYZE_TIME;
@@ -46,18 +46,18 @@ public class Enemy extends Human {
         boolean isDefendSelf = false;
         for (int angle = 0; angle < 360; angle++) {
             setAngle(angle);
-            float[] distance = distanceTo(GameObjectType.PLAYER);
-            float distanceToPlayer = distance[0];
+            TargetObject targetObject = distanceTo(GameObjectType.PLAYER);
+            float distanceToPlayer = targetObject.getDistanceToHuman();
             if (distanceToPlayer >= 0 && distanceToPlayer < currentDistanceToPlayer) {
                 currentDistanceToPlayer = distanceToPlayer;
                 currentAngle = angle;
             }
-            float distanceToBlock = distance[1];
+            float distanceToBlock = targetObject.getDistanceToBlock();
             if (distanceToBlock > currentDistanceToBlock) {
                 currentDistanceToBlock = distanceToBlock;
                 angleToMove = angle;
             }
-            float distanceToPlayerBullet = distance[2];
+            float distanceToPlayerBullet = targetObject.getDistanceToHumanBullet();
             if (distanceToPlayerBullet > 0 && distanceToPlayerBullet < Constants.HUMAN_SIZE) {
                 currentAngle = angle;
                 isDefendSelf = true;

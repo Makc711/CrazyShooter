@@ -43,7 +43,7 @@ public class Bullet extends GameObject {
             }
         } else {
             this.setHealth(0);
-            if (otherObject != ownerObject) {
+            if (ownerObject != null && otherObject.getType() != ownerObject.getType()) {
                 otherObject.doDamage(Constants.DAMAGE_FROM_BULLET);
             }
         }

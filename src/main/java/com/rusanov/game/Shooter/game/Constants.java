@@ -46,6 +46,7 @@ public class Constants {
     public static final float ENEMY_ANALYZE_TIME = 1.5f;
     public static final int ENEMY_START_WAIT = 3;
     public static final int MAXIMUM_FIRE_DISTANCE = 10_000;
+    static final int ENEMIES_ON_LEVEL = 2;
 
     public static final int BULLET_SIZE = 8;
     public static final int BULLET_SPEED = 300;

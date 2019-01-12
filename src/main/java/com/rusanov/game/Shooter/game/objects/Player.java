@@ -11,7 +11,7 @@ public class Player extends Human {
     private int keyDown;
     private int keyLeft;
     private int keyRight;
-    private boolean isKillEnemy;
+    private GameObject targetObject;
 
     public Player(GameTexture textureHuman) {
         super(GameObjectType.PLAYER, textureHuman, Constants.PLAYER_COLOR);
@@ -67,10 +67,7 @@ public class Player extends Human {
 
         if (Mouse.isButtonDown(0)) {
             if (fire()) {
-                float[] distance = distanceTo(GameObjectType.ENEMY);
-                if (distance[0] > 0) {
-                    isKillEnemy = true;
-                }
+                targetObject = distanceTo(GameObjectType.ENEMY).getTargetObject();
             }
         }
     }
@@ -82,11 +79,11 @@ public class Player extends Human {
         this.keyRight = keyRight;
     }
 
-    boolean isKillEnemy() {
-        return isKillEnemy;
+    GameObject getTargetObject() {
+        return targetObject;
     }
 
     void protectEnemy() {
-        isKillEnemy = false;
+        targetObject = null;
     }
 }

@@ -20,15 +20,14 @@ public class Game implements Serializable {
     private boolean isGameActive = true;
     private long timeLastFrame = 0;
     private List<GameObject> objects;
-    //private transient GameTexture textureHuman;
     private transient GameTexture[] textures;
     private WayFinder wayFinder;
     private GameObject player;
-    private GameObject enemy;
+    private GameObject[] enemies = new GameObject[Constants.ENEMIES_ON_LEVEL];
     private int playerPoints = 0;
     private int enemyPoints = 0;
     private boolean isPlayerDied = false;
-    private boolean isEnemyDied = false;
+    private boolean isEnemiesDied = false;
     private boolean isReload = false;
     private GameState gameState = GameState.MENU;
     private GameState gameStateOld = null;
@@ -56,7 +55,9 @@ public class Game implements Serializable {
 
     void setTextures() {
         ((Human)player).setTextureHuman();
-        ((Human)enemy).setTextureHuman();
+        for (GameObject enemy : enemies) {
+            ((Human)enemy).setTextureHuman();
+        }
     }
 
     public void initialize() {
@@ -149,16 +150,16 @@ public class Game implements Serializable {
                 Constants.SCORE_POSITION_Y, String.valueOf(enemyPoints), org.newdawn.slick.Color.red);
 
         boolean isContinue = false;
-        if (player != null && player.getHealth() <= 0) {
+        if (isPlayerDied) {
             String playerDied = "Player died!";
             FontGame.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(playerDied) / 2,
                     MenuSizes.SCREEN_HEIGHT / 2 - FontGame.TIMES_NEW_ROMAN.getHeight(playerDied) / 2, playerDied, org.newdawn.slick.Color.green);
             isContinue = true;
         }
-        if (enemy != null && enemy.getHealth() <= 0) {
-            String enemyDied = "Enemy died!";
-            FontGame.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(enemyDied) / 2,
-                    MenuSizes.SCREEN_HEIGHT / 2 + FontGame.TIMES_NEW_ROMAN.getHeight(enemyDied) / 2, enemyDied, org.newdawn.slick.Color.red);
+        if (isEnemiesDied) {
+            String enemiesDied = "Enemies died!";
+            FontGame.TIMES_NEW_ROMAN.drawString(MenuSizes.SCREEN_WIDTH / 2 - FontGame.TIMES_NEW_ROMAN.getWidth(enemiesDied) / 2,
+                    MenuSizes.SCREEN_HEIGHT / 2 + FontGame.TIMES_NEW_ROMAN.getHeight(enemiesDied) / 2, enemiesDied, org.newdawn.slick.Color.red);
             isContinue = true;
         }
         if (isContinue) {
@@ -202,19 +203,25 @@ public class Game implements Serializable {
             enemyPoints++;
             isPlayerDied = true;
         }
-        if (enemy != null && enemy.getHealth() <= 0 && !isEnemyDied) {
+        int countDiedEnemies = 0;
+        for (GameObject enemy : enemies) {
+            if (enemy != null && enemy.getHealth() <= 0) {
+                countDiedEnemies++;
+            }
+        }
+        if (countDiedEnemies == Constants.ENEMIES_ON_LEVEL && !isEnemiesDied) {
             playerPoints++;
-            isEnemyDied = true;
+            isEnemiesDied = true;
         }
 
-        if (isPlayerDied || isEnemyDied) {
+        if (isPlayerDied || isEnemiesDied) {
             if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
                 if (playerPoints >= Constants.MAX_SCORE || enemyPoints >= Constants.MAX_SCORE) {
                     resetGameProgress();
                     gameState = GameState.MENU;
                 } else {
                     isPlayerDied = false;
-                    isEnemyDied = false;
+                    isEnemiesDied = false;
                     initialize();
                 }
             }
@@ -224,7 +231,7 @@ public class Game implements Serializable {
     public void resetGameProgress() {
         Input.keyboardRefresh();
         isPlayerDied = false;
-        isEnemyDied = false;
+        isEnemiesDied = false;
         playerPoints = 0;
         enemyPoints = 0;
     }
@@ -339,8 +346,10 @@ public class Game implements Serializable {
         this.player = player;
     }
 
-    void setEnemy(GameObject enemy) {
-        this.enemy = enemy;
+    void addEnemy(GameObject enemy, int index) {
+        if (index < enemies.length) {
+            enemies[index] = enemy;
+        }
     }
 
     public void setGameState(GameState gameState) {
