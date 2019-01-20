@@ -1,8 +1,6 @@
 package com.rusanov.game.Shooter.game;
 
-import com.rusanov.game.Shooter.game.objects.GameObject;
-import com.rusanov.game.Shooter.game.objects.GameObjectType;
-import com.rusanov.game.Shooter.game.objects.Player;
+import com.rusanov.game.Shooter.game.objects.*;
 import com.rusanov.game.Shooter.menu.MenuSizes;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -38,31 +36,79 @@ class Level {
     }
 
     private void createPlayer() {
-        int x, y;
-        Player player;
-        do {
-            x = ThreadLocalRandom.current().
-                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_WIDTH - Constants.HUMAN_SIZE / 2 + 1);
-            y = ThreadLocalRandom.current().
-                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_HEIGHT - Constants.HUMAN_SIZE / 2 + 1);
-            player = (Player)game.createObject(GameObjectType.PLAYER, x, y);
-        } while (player == null);
+        Player player = (Player)createHuman(GameObjectType.PLAYER);
         player.setKeys(ControlItem.KEY_UP.getKeycode(), ControlItem.KEY_DOWN.getKeycode(),
                 ControlItem.KEY_LEFT.getKeycode(), ControlItem.KEY_RIGHT.getKeycode());
+        player.setSpeed(Constants.PLAYER_SPEED);
+        player.setHealth(Constants.PLAYER_HEALTH);
+        player.setRechargeTime(Constants.PLAYER_RECHARGE_TIME);
         game.setPlayer(player);
     }
 
     private void createEnemies() {
-        for (int i = 0; i < Constants.ENEMIES_ON_LEVEL; i++) {
-            GameObject enemy;
-            do {
-                int x = ThreadLocalRandom.current().
-                        nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_WIDTH - Constants.HUMAN_SIZE / 2 + 1);
-                int y = ThreadLocalRandom.current().
-                        nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_HEIGHT - Constants.HUMAN_SIZE / 2 + 1);
-                enemy = game.createObject(GameObjectType.ENEMY, x, y);
-            } while (enemy == null);
+        int level = game.getPlayerPoints();
+        for (int i = 0; i < Constants.LEVEL_SETTINGS[level].getEnemiesOnLevel(); i++) {
+            Enemy enemy = (Enemy)createHuman(GameObjectType.ENEMY);
+            enemy.setSpeed(Constants.LEVEL_SETTINGS[level].getEnemySpeed());
+            enemy.setHealth(Constants.LEVEL_SETTINGS[level].getEnemyHealth());
+            enemy.setMaximumFireDistance(Constants.LEVEL_SETTINGS[level].getMaximumFireDistance());
+            enemy.setTimeBetweenActions(Constants.LEVEL_SETTINGS[level].getAnalyzeTime());
+            enemy.setRechargeTime(Constants.LEVEL_SETTINGS[level].getRechargeTime());
             game.addEnemy(enemy, i);
         }
+    }
+
+    private Human createHuman(GameObjectType objectType) {
+        Human human;
+        do {
+            int x = ThreadLocalRandom.current().
+                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_WIDTH - Constants.HUMAN_SIZE / 2 + 1);
+            int y = ThreadLocalRandom.current().
+                    nextInt(Constants.HUMAN_SIZE / 2, MenuSizes.SCREEN_HEIGHT - Constants.HUMAN_SIZE / 2 + 1);
+            human = (Human)game.createObject(objectType, x, y);
+        } while (human == null);
+        return human;
+    }
+}
+
+class LevelSettings {
+    private int enemiesOnLevel;
+    private int enemySpeed;
+    private int enemyHealth;
+    private float rechargeTime;
+    private float analyzeTime;
+    private int maximumFireDistance;
+
+    LevelSettings(int enemiesOnLevel, int enemySpeed, int enemyHealth, float rechargeTime, int maximumFireDistance) {
+        this.enemiesOnLevel = enemiesOnLevel;
+        this.enemySpeed = enemySpeed;
+        this.enemyHealth = enemyHealth;
+        this.rechargeTime = rechargeTime;
+        this.analyzeTime = rechargeTime;
+        this.maximumFireDistance = maximumFireDistance;
+    }
+
+    int getEnemiesOnLevel() {
+        return enemiesOnLevel;
+    }
+
+    int getEnemySpeed() {
+        return enemySpeed;
+    }
+
+    int getEnemyHealth() {
+        return enemyHealth;
+    }
+
+    float getRechargeTime() {
+        return rechargeTime;
+    }
+
+    float getAnalyzeTime() {
+        return analyzeTime;
+    }
+
+    int getMaximumFireDistance() {
+        return maximumFireDistance;
     }
 }

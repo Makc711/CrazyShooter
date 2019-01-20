@@ -13,6 +13,7 @@ public class Human extends GameObject {
     private transient GameTexture textureHuman;
     private int textureSize = Constants.HUMAN_TEXTURE_SIZE;
     private float angle = ThreadLocalRandom.current().nextInt(0, 360);
+    private float rechargeTime;
     private float fireCooldownTime = 0;
     private float speed = 0;
 
@@ -93,7 +94,7 @@ public class Human extends GameObject {
         if (fireCooldownTime > 0) {
             return false;
         }
-        fireCooldownTime = Constants.HUMAN_FIRE_COOLDOWN_TIME;
+        fireCooldownTime = rechargeTime;
         float[] position = calculateFrontCellPosition();
         float x = position[0];
         float y = position[1];
@@ -204,8 +205,12 @@ public class Human extends GameObject {
         return null;
     }
 
-    void setSpeed(float speed) {
+    public void setSpeed(float speed) {
         this.speed = speed;
+    }
+
+    public void setRechargeTime(float rechargeTime) {
+        this.rechargeTime = rechargeTime;
     }
 
     float getAngle() {

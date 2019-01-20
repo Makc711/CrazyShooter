@@ -15,8 +15,6 @@ public class Player extends Human {
 
     public Player(GameTexture textureHuman) {
         super(GameObjectType.PLAYER, textureHuman, Constants.PLAYER_COLOR);
-        setSpeed(Constants.PLAYER_SPEED);
-        this.setHealth(Constants.PLAYER_HEALTH);
     }
 
     @Override

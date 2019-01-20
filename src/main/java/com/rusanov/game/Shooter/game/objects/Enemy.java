@@ -7,13 +7,13 @@ import com.rusanov.game.Shooter.graphics.GameTexture;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Enemy extends Human {
+    private float timeBetweenActions;
     private float analyzeTime = Constants.ENEMY_START_WAIT;
+    private int maximumFireDistance;
 
     public Enemy(GameTexture textureHuman) {
         super(GameObjectType.ENEMY, textureHuman, Constants.ENEMY_COLOR);
-        setSpeed(Constants.ENEMY_SPEED);
         setInvulnerable(true);
-        this.setHealth(Constants.ENEMY_HEALTH);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Enemy extends Human {
             if (player != null && player.getTargetObject() == this) {
                 player.protectEnemy();
             }
-            analyzeTime = Constants.ENEMY_ANALYZE_TIME;
+            analyzeTime = timeBetweenActions;
             analyze();
         }
     }
@@ -41,7 +41,7 @@ public class Enemy extends Human {
     private void analyze() {
         float currentAngle = getAngle();
         float angleToMove = currentAngle;
-        float currentDistanceToPlayer = Constants.MAXIMUM_FIRE_DISTANCE;
+        float currentDistanceToPlayer = maximumFireDistance;
         float currentDistanceToBlock = 0;
         boolean isDefendSelf = false;
         for (int angle = 0; angle < 360; angle++) {
@@ -66,7 +66,7 @@ public class Enemy extends Human {
         }
         setAngle(currentAngle);
 
-        if (isDefendSelf || currentDistanceToPlayer < Constants.MAXIMUM_FIRE_DISTANCE) {
+        if (isDefendSelf || currentDistanceToPlayer < maximumFireDistance) {
             setXSpeed(0);
             setYSpeed(0);
             fire();
@@ -108,5 +108,13 @@ public class Enemy extends Human {
                 }
             }
         }
+    }
+
+    public void setMaximumFireDistance(int maximumFireDistance) {
+        this.maximumFireDistance = maximumFireDistance;
+    }
+
+    public void setTimeBetweenActions(float timeBetweenActions) {
+        this.timeBetweenActions = timeBetweenActions;
     }
 }

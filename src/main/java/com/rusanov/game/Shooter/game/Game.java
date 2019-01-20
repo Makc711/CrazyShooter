@@ -23,7 +23,7 @@ public class Game implements Serializable {
     private transient GameTexture[] textures;
     private WayFinder wayFinder;
     private GameObject player;
-    private GameObject[] enemies = new GameObject[Constants.ENEMIES_ON_LEVEL];
+    private GameObject[] enemies;
     private int playerPoints = 0;
     private int enemyPoints = 0;
     private boolean isPlayerDied = false;
@@ -45,6 +45,7 @@ public class Game implements Serializable {
         menuConstructor = new MenuConstructor(this);
         pauseMenu = new PauseMenu(this);
         menuConstructor.checkSave();
+        enemies = new GameObject[Constants.MAX_ENEMIES_ON_LEVEL];
     }
 
     void loadTextures() {
@@ -55,8 +56,8 @@ public class Game implements Serializable {
 
     void setTextures() {
         ((Human)player).setTextureHuman();
-        for (GameObject enemy : enemies) {
-            ((Human)enemy).setTextureHuman();
+        for (int i = 0; i < Constants.LEVEL_SETTINGS[playerPoints].getEnemiesOnLevel(); i++) {
+            ((Human)enemies[i]).setTextureHuman();
         }
     }
 
@@ -203,15 +204,18 @@ public class Game implements Serializable {
             enemyPoints++;
             isPlayerDied = true;
         }
-        int countDiedEnemies = 0;
-        for (GameObject enemy : enemies) {
-            if (enemy != null && enemy.getHealth() <= 0) {
-                countDiedEnemies++;
+        if (playerPoints < Constants.MAX_SCORE) {
+            int numberOfEnemiesOnLevel = Constants.LEVEL_SETTINGS[playerPoints].getEnemiesOnLevel();
+            int countDiedEnemies = 0;
+            for (int i = 0; i < numberOfEnemiesOnLevel; i++) {
+                if (enemies[i] != null && enemies[i].getHealth() <= 0) {
+                    countDiedEnemies++;
+                }
             }
-        }
-        if (countDiedEnemies == Constants.ENEMIES_ON_LEVEL && !isEnemiesDied) {
-            playerPoints++;
-            isEnemiesDied = true;
+            if (countDiedEnemies == numberOfEnemiesOnLevel && !isEnemiesDied) {
+                playerPoints++;
+                isEnemiesDied = true;
+            }
         }
 
         if (isPlayerDied || isEnemiesDied) {
@@ -344,6 +348,10 @@ public class Game implements Serializable {
 
     void setPlayer(GameObject player) {
         this.player = player;
+    }
+
+    int getPlayerPoints() {
+        return playerPoints;
     }
 
     void addEnemy(GameObject enemy, int index) {

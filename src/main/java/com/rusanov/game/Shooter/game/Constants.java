@@ -18,7 +18,6 @@ public class Constants {
     static final int KEY_RIGHT = Keyboard.KEY_D;
     public static final int MOUSE_LEFT = 0;
 
-    static final int MAX_SCORE = 10;
     static final int SCORE_POSITION_X = 15;
     static final int SCORE_POSITION_Y = 5;
 
@@ -32,21 +31,32 @@ public class Constants {
     public static final int HUMAN_SIZE = 60;
     public static final int HUMAN_TEXTURE_SIZE = HUMAN_SIZE * 256 / 200;
     public static final int HUMAN_GUN_SIZE = 56;
-    public static final float HUMAN_FIRE_COOLDOWN_TIME = 1.5f;
     public static final int TILES_IN_HUMAN_SIZE = 3;
     public static final int TILE_SIZE = HUMAN_SIZE / TILES_IN_HUMAN_SIZE;
+    public static final int MAXIMUM_FIRE_DISTANCE = 10_000;
 
     public static final Color PLAYER_COLOR = Color.GREEN;
-    public static final int PLAYER_SPEED = 100;
-    public static final int PLAYER_HEALTH = 2;
+    static final int PLAYER_SPEED = 100;
+    static final int PLAYER_HEALTH = 2;
+    static final float PLAYER_RECHARGE_TIME = 1.5f;
 
     public static final Color ENEMY_COLOR = Color.RED;
-    public static final int ENEMY_SPEED = 100;
-    public static final int ENEMY_HEALTH = 2;
-    public static final float ENEMY_ANALYZE_TIME = 1.5f;
     public static final int ENEMY_START_WAIT = 3;
-    public static final int MAXIMUM_FIRE_DISTANCE = 10_000;
-    static final int ENEMIES_ON_LEVEL = 2;
+    static final int MAX_ENEMIES_ON_LEVEL = 2;
+
+    static final LevelSettings[] LEVEL_SETTINGS = {
+        new LevelSettings(1, 100, 1, 1.5f, 10_000),
+        new LevelSettings(1, 100, 2, 1.5f, 10_000),
+        new LevelSettings(1, 200, 2, 1.0f, 400),
+        new LevelSettings(2, 100, 1, 1.5f, 10_000),
+        new LevelSettings(2, 100, 2, 1.5f, 400),
+        new LevelSettings(2, 200, 2, 1.2f, 600),
+        new LevelSettings(2, 200, 2, 1.5f, 800),
+        new LevelSettings(2, 200, 2, 1.4f, 1_000),
+        new LevelSettings(2, 200, 2, 1.2f, 1_000),
+        new LevelSettings(2, 200, 2, 1.0f, 10_000)
+    };
+    static final int MAX_SCORE = LEVEL_SETTINGS.length;
 
     public static final int BULLET_SIZE = 8;
     public static final int BULLET_SPEED = 300;
