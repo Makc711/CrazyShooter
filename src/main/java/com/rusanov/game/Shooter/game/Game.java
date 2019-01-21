@@ -49,9 +49,12 @@ public class Game implements Serializable {
     }
 
     void loadTextures() {
-        GameTexture textureHuman1 = new GameTexture(Constants.TEXTURE_HUMAN1);
-        GameTexture textureHuman2 = new GameTexture(Constants.TEXTURE_HUMAN2);
-        textures = new GameTexture[] { textureHuman1, textureHuman2 };
+        textures = new GameTexture[NameOfTexture.values().length];
+        int i = 0;
+        for (NameOfTexture texture: NameOfTexture.values()) {
+            textures[i] = new GameTexture(texture.toString());
+            i++;
+        }
     }
 
     void setTextures() {
@@ -256,10 +259,10 @@ public class Game implements Serializable {
                 }
                 break;
             case PLAYER:
-                object = new Player(textures[1]);
+                object = new Player(textures[NameOfTexture.TEXTURE_HUMAN2.getCode()]);
                 break;
             case ENEMY:
-                object = new Enemy(textures[1]);
+                object = new Enemy(textures[NameOfTexture.TEXTURE_HUMAN2.getCode()]);
                 break;
             case BULLET:
                 object = new Bullet();

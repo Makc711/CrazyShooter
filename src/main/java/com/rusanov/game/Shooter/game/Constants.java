@@ -12,10 +12,10 @@ public class Constants {
     public static final int DISPLAY_BITS_PER_PIXEL_MAC = 24;
     public static final float DISPLAY_WIDESCREEN = 1.4f;
 
-    static final int KEY_UP = Keyboard.KEY_W;
-    static final int KEY_DOWN = Keyboard.KEY_S;
-    static final int KEY_LEFT = Keyboard.KEY_A;
-    static final int KEY_RIGHT = Keyboard.KEY_D;
+    static final int KEY_UP = Keyboard.KEY_UP;
+    static final int KEY_DOWN = Keyboard.KEY_DOWN;
+    static final int KEY_LEFT = Keyboard.KEY_LEFT;
+    static final int KEY_RIGHT = Keyboard.KEY_RIGHT;
     public static final int MOUSE_LEFT = 0;
 
     static final int SCORE_POSITION_X = 15;
@@ -64,7 +64,4 @@ public class Constants {
 
     static final String TEXTURE_CURSOR_HAND = "Textures/CursorHand.png";
     static final String TEXTURE_CURSOR_AIM = "Textures/CursorAim.png";
-    static final String TEXTURE_HUMAN1 = "Textures/Human1.png";
-    static final String TEXTURE_HUMAN2 = "Textures/Human2.png";
 }
-

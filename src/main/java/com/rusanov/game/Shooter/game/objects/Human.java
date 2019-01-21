@@ -1,6 +1,7 @@
 package com.rusanov.game.Shooter.game.objects;
 
 import com.rusanov.game.Shooter.game.Constants;
+import com.rusanov.game.Shooter.game.NameOfTexture;
 import com.rusanov.game.Shooter.graphics.GameTexture;
 import com.rusanov.game.Shooter.menu.MenuSizes;
 import org.lwjgl.opengl.GL11;
@@ -222,6 +223,6 @@ public class Human extends GameObject {
     }
 
     public void setTextureHuman() {
-        textureHuman = getGame().getTextures()[(getHealth() == 1) ? 0 : 1];
+        textureHuman = getGame().getTextures()[(getHealth() == 1) ? NameOfTexture.TEXTURE_HUMAN1.getCode() : NameOfTexture.TEXTURE_HUMAN2.getCode()];
     }
 }
