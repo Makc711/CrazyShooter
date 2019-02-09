@@ -5,5 +5,6 @@ public enum GameObjectType {
     BLOCK,
     PLAYER,
     ENEMY,
-    BULLET
+    BULLET,
+    BONUS
 }

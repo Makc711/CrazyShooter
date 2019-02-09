@@ -58,9 +58,14 @@ public class Game implements Serializable {
     }
 
     void setTextures() {
-        ((Human)player).setTextureHuman();
+        ((Human)player).setTexture();
         for (int i = 0; i < Constants.LEVEL_SETTINGS[playerPoints].getEnemiesOnLevel(); i++) {
-            ((Human)enemies[i]).setTextureHuman();
+            ((Human)enemies[i]).setTexture();
+        }
+        for (GameObject object: objects) {
+            if (object.getType() == GameObjectType.BONUS) {
+                ((Bonus)object).setTexture();
+            }
         }
     }
 
@@ -266,6 +271,9 @@ public class Game implements Serializable {
                 break;
             case BULLET:
                 object = new Bullet();
+                break;
+            case BONUS:
+                object = new Bonus(textures[NameOfTexture.TEXTURE_WOODEN_BOX.getCode()]);
                 break;
             default:
                 System.out.println("Error: Can't create object \"" + objectType.name() + "\"");

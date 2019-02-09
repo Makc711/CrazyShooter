@@ -234,4 +234,8 @@ public class MenuConstructor implements Serializable {
         controlMenu.resetChangedSettings();
         videoMenu.resetChangedSettings();
     }
+
+    public boolean isMoveTowardsGaze() {
+        return controlMenu.isMoveTowardsGaze();
+    }
 }

@@ -12,6 +12,7 @@ public class Player extends Human {
     private int keyLeft;
     private int keyRight;
     private GameObject targetObject;
+    private boolean isMoveTowardsGaze;
 
     public Player(GameTexture textureHuman) {
         super(GameObjectType.PLAYER, textureHuman, Constants.PLAYER_COLOR);
@@ -26,47 +27,51 @@ public class Player extends Human {
         float angle = (float)(Math.toDegrees(Math.atan2(-deltaY, deltaX)));
         setAngle(angle);
 
+        movePlayer();
+
+        if (Mouse.isButtonDown(Constants.MOUSE_LEFT)) {
+            if (fire()) {
+                targetObject = distanceTo(GameObjectType.ENEMY).getTargetObject();
+            }
+        }
+    }
+
+    private void movePlayer() {
         if (!Keyboard.isKeyDown(keyRight) && Keyboard.isKeyDown(keyUp) &&
                 !Keyboard.isKeyDown(keyLeft) && !Keyboard.isKeyDown(keyDown)) {
             move(Direction.UP);
-
         } else if (!Keyboard.isKeyDown(keyRight) && !Keyboard.isKeyDown(keyUp) &&
                 !Keyboard.isKeyDown(keyLeft) && Keyboard.isKeyDown(keyDown)) {
             move(Direction.DOWN);
-
         } else if (!Keyboard.isKeyDown(keyRight) && !Keyboard.isKeyDown(keyUp) &&
                 Keyboard.isKeyDown(keyLeft) && !Keyboard.isKeyDown(keyDown)) {
             move(Direction.LEFT);
-
         } else if (Keyboard.isKeyDown(keyRight) && !Keyboard.isKeyDown(keyUp) &&
                 !Keyboard.isKeyDown(keyLeft) && !Keyboard.isKeyDown(keyDown)) {
             move(Direction.RIGHT);
-
         } else if (!Keyboard.isKeyDown(keyRight) && Keyboard.isKeyDown(keyUp) &&
                 Keyboard.isKeyDown(keyLeft) && !Keyboard.isKeyDown(keyDown)) {
             move(Direction.UP_LEFT);
-
         } else if (Keyboard.isKeyDown(keyRight) && Keyboard.isKeyDown(keyUp) &&
                 !Keyboard.isKeyDown(keyLeft) && !Keyboard.isKeyDown(keyDown)) {
             move(Direction.UP_RIGHT);
-
         } else if (!Keyboard.isKeyDown(keyRight) && !Keyboard.isKeyDown(keyUp) &&
                 Keyboard.isKeyDown(keyLeft) && Keyboard.isKeyDown(keyDown)) {
             move(Direction.DOWN_LEFT);
-
         } else if (Keyboard.isKeyDown(keyRight) && !Keyboard.isKeyDown(keyUp) &&
                 !Keyboard.isKeyDown(keyLeft) && Keyboard.isKeyDown(keyDown)) {
             move(Direction.DOWN_RIGHT);
-
         } else {
             setXSpeed(0);
             setYSpeed(0);
         }
+    }
 
-        if (Mouse.isButtonDown(0)) {
-            if (fire()) {
-                targetObject = distanceTo(GameObjectType.ENEMY).getTargetObject();
-            }
+    private void move(Direction direction) {
+        if (isMoveTowardsGaze) {
+            moveTowardsGaze(direction);
+        } else {
+            moveAlongAxes(direction);
         }
     }
 
@@ -81,7 +86,7 @@ public class Player extends Human {
         return targetObject;
     }
 
-    void protectEnemy() {
-        targetObject = null;
+    public void setMoveTowardsGaze(boolean moveTowardsGaze) {
+        isMoveTowardsGaze = moveTowardsGaze;
     }
 }

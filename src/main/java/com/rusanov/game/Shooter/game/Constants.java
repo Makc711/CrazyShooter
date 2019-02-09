@@ -29,8 +29,8 @@ public class Constants {
     public static final Color BLOCK_COLOR = Color.ORANGE;
 
     public static final int HUMAN_SIZE = 60;
-    public static final int HUMAN_TEXTURE_SIZE = HUMAN_SIZE * 256 / 200;
     public static final int HUMAN_GUN_SIZE = 56;
+    public static final int HUMAN_TEXTURE_SIZE = HUMAN_SIZE * 256 / (256 - HUMAN_GUN_SIZE);
     public static final int TILES_IN_HUMAN_SIZE = 3;
     public static final int TILE_SIZE = HUMAN_SIZE / TILES_IN_HUMAN_SIZE;
     public static final int MAXIMUM_FIRE_DISTANCE = 10_000;
@@ -62,6 +62,15 @@ public class Constants {
     public static final int BULLET_SPEED = 300;
     public static final int DAMAGE_FROM_BULLET = 1;
 
+    public static final int BONUS_SIZE = 50;
+    public static final int BONUS_HEALTH = 2;
+    public static final int BONUS_GIVE_HEALTH = 1;
+    public static final int BONUS_GIVE_INVULNERABLE_TIME = 5;
+    public static final float BONUS_GIVE_RECHARGE_TIME = 0.5f;
+    public static final int BONUS_GIVE_FAST_SPEED = 200;
+
     static final String TEXTURE_CURSOR_HAND = "Textures/CursorHand.png";
     static final String TEXTURE_CURSOR_AIM = "Textures/CursorAim.png";
+
+    public static final float MATH_45_ANGLE = (float)Math.sqrt(2) / 2;
 }

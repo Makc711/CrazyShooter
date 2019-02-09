@@ -14,6 +14,7 @@ public class Enemy extends Human {
     public Enemy(GameTexture textureHuman) {
         super(GameObjectType.ENEMY, textureHuman, Constants.ENEMY_COLOR);
         setInvulnerable(true);
+        setInvulnerableTime(Constants.ENEMY_START_WAIT);
     }
 
     @Override
@@ -24,15 +25,9 @@ public class Enemy extends Human {
         if (analyzeTime > 0) {
             analyzeTime -= deltaTime;
             if (player != null && player.getTargetObject() == this) {
-                move(Direction.DOWN_LEFT);
+                moveTowardsGaze(Direction.DOWN_LEFT);
             }
         } else {
-            if (isInvulnerable()) {
-                setInvulnerable(false);
-            }
-            if (player != null && player.getTargetObject() == this) {
-                player.protectEnemy();
-            }
             analyzeTime = timeBetweenActions;
             analyze();
         }
@@ -93,15 +88,15 @@ public class Enemy extends Human {
             int up = (dY >= 0) ? -1 : 1;
             float directionAngle = (float)(up * Math.toDegrees(Math.acos(dX / Math.sqrt(dX * dX + dY * dY))));
             setAngle(directionAngle);
-            move(Direction.UP);
+            moveTowardsGaze(Direction.UP);
         } else {
             if (ThreadLocalRandom.current().nextInt(0, 3) == 0) {
                 setAngle(ThreadLocalRandom.current().nextInt(0, 360));
-                move(Direction.UP);
+                moveTowardsGaze(Direction.UP);
             } else {
                 if (currentDistanceToBlock > 0) {
                     setAngle(angleToMove);
-                    move(Direction.UP);
+                    moveTowardsGaze(Direction.UP);
                 } else {
                     setXSpeed(0);
                     setYSpeed(0);

@@ -21,6 +21,7 @@ class Level {
         }
         createPlayer();
         createEnemies();
+        createBonus();
     }
 
     private void createBlock() {
@@ -42,6 +43,7 @@ class Level {
         player.setSpeed(Constants.PLAYER_SPEED);
         player.setHealth(Constants.PLAYER_HEALTH);
         player.setRechargeTime(Constants.PLAYER_RECHARGE_TIME);
+        player.setMoveTowardsGaze(game.getMenuConstructor().isMoveTowardsGaze());
         game.setPlayer(player);
     }
 
@@ -56,6 +58,17 @@ class Level {
             enemy.setRechargeTime(Constants.LEVEL_SETTINGS[level].getRechargeTime());
             game.addEnemy(enemy, i);
         }
+    }
+
+    private void createBonus() {
+        int x;
+        int y;
+        do {
+            x = ThreadLocalRandom.current().
+                    nextInt(Constants.BONUS_SIZE / 2, MenuSizes.SCREEN_WIDTH - Constants.BONUS_SIZE / 2 + 1);
+            y = ThreadLocalRandom.current().
+                    nextInt(Constants.BONUS_SIZE / 2, MenuSizes.SCREEN_HEIGHT - Constants.BONUS_SIZE / 2 + 1);
+        } while (game.createObject(GameObjectType.BONUS, x, y) == null);
     }
 
     private Human createHuman(GameObjectType objectType) {

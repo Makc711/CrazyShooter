@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 
 public class MenuSizes {
     public static boolean FULLSCREEN;
+    static boolean WIDESCREEN;
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;
 
@@ -42,10 +43,12 @@ public class MenuSizes {
                 MenuConstants.NAME_OF_VIDEO_SETTINGS).getAbsolutePath();
         try(ObjectInputStream videoSettings = new ObjectInputStream(new FileInputStream(videoSettingsFullName))) {
             FULLSCREEN = videoSettings.readBoolean();
+            WIDESCREEN = videoSettings.readBoolean();
             SCREEN_WIDTH = videoSettings.readInt();
             SCREEN_HEIGHT = videoSettings.readInt();
         } catch(Exception e) {
             FULLSCREEN = false;
+            WIDESCREEN = false;
             SCREEN_WIDTH = 800;
             SCREEN_HEIGHT = 600;
         }

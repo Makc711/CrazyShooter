@@ -50,7 +50,6 @@ public abstract class GameObject implements Serializable {
         if (invulnerable) {
             return;
         }
-
         if (health > damage) {
             health -= damage;
         } else {

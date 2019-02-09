@@ -50,4 +50,8 @@ public class MenuConstants {
     static final String NAME_OF_VIDEO_SETTINGS = "Video.dat";
     public static final String NAME_OF_SAVE_DIRECTORY = "Data\\Saves\\";
     public static final String NAME_OF_SAVE = "Save.dat";
+
+    static final String NAME_OF_CHECKBOX_FULLSCREEN = "Fullscreen";
+    static final String NAME_OF_CHECKBOX_WIDESCREEN = "Widescreen";
+    static final String NAME_OF_CHECKBOX_MOVE_TG = "Move towards gaze";
 }

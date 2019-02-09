@@ -2,10 +2,7 @@ package com.rusanov.game.Shooter.menu;
 
 import com.rusanov.game.Shooter.Input;
 import com.rusanov.game.Shooter.game.ControlItem;
-import com.rusanov.game.Shooter.menu.objects.Background;
-import com.rusanov.game.Shooter.menu.objects.KeyField;
-import com.rusanov.game.Shooter.menu.objects.MenuButton;
-import com.rusanov.game.Shooter.menu.objects.MenuObject;
+import com.rusanov.game.Shooter.menu.objects.*;
 import org.lwjgl.input.Keyboard;
 
 import java.io.*;
@@ -16,6 +13,7 @@ class ControlMenu implements Serializable {
     private List<MenuObject> controlObjects = new ArrayList<>();
     private MenuButton buttonControl;
     private boolean isSettingsChanged = false;
+    private boolean isMoveTowardsGaze = true;
 
     ControlMenu(MenuButton buttonControl) {
         this.buttonControl = buttonControl;
@@ -31,15 +29,22 @@ class ControlMenu implements Serializable {
             for (ControlItem controlItem : ControlItem.values()) {
                 controlItem.setKeycode(controlItems.read());
             }
+            isMoveTowardsGaze = controlItems.read() > 0;
         } catch(Exception e) {
+            isMoveTowardsGaze = true;
             e.printStackTrace();
         }
-        for (int i = 0; i < ControlItem.values().length; i++) {
+        int i = 0;
+        for ( ; i < ControlItem.values().length; i++) {
             KeyField keyField = new KeyField(ControlItem.values()[i], ControlItem.values()[i].getKeycode(),
                     ControlItem.values()[i].toString(),
                     MenuSizes.MENU_OPTIONS_X, keyFieldStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             controlObjects.add(keyField);
         }
+        Checkbox moveTowardsGaze = new Checkbox(MenuConstants.NAME_OF_CHECKBOX_MOVE_TG,
+                MenuSizes.MENU_OPTIONS_X, keyFieldStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
+        moveTowardsGaze.setSelected(isMoveTowardsGaze);
+        controlObjects.add(moveTowardsGaze);
     }
 
     void render() {
@@ -74,6 +79,15 @@ class ControlMenu implements Serializable {
                         }
                         keyField.setPressed(false);
                         setAllFieldsActive();
+                    }
+                }
+            } else if (menuObject instanceof Checkbox) {
+                Checkbox checkbox = (Checkbox)menuObject;
+                if (checkbox.isPressed()) {
+                    checkbox.setNotPressed();
+                    if (checkbox.toString().equals(MenuConstants.NAME_OF_CHECKBOX_MOVE_TG)) {
+                        isMoveTowardsGaze = checkbox.isSelected();
+                        isSettingsChanged = true;
                     }
                 }
             }
@@ -127,6 +141,7 @@ class ControlMenu implements Serializable {
                 for (ControlItem controlItem : ControlItem.values()) {
                     outputStream.write(controlItem.getKeycode());
                 }
+                outputStream.write(isMoveTowardsGaze ? 1 : 0);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -155,5 +170,9 @@ class ControlMenu implements Serializable {
                 backgroundX + backgroundWidth / 2 - MenuSizes.BUTTON_WIDTH / 2,
                 backgroundY + backgroundHeight - MenuSizes.BUTTON_OPTIONS_BORDER_Y / 2 - MenuSizes.BUTTON_HEIGHT);
         menuObjects.add(button);
+    }
+
+    boolean isMoveTowardsGaze() {
+        return isMoveTowardsGaze;
     }
 }

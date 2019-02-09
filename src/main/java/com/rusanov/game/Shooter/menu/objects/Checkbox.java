@@ -58,6 +58,11 @@ public class Checkbox extends MenuObject {
         }
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public boolean isSelected() {
         return isSelected;
     }

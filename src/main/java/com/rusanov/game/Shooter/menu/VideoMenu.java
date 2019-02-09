@@ -16,9 +16,8 @@ class VideoMenu implements Serializable {
     private List<MenuObject> videoObjects = new ArrayList<>();
     private MenuButton buttonVideo;
     private boolean isSettingsChanged = false;
-    private Checkbox checkboxFullscreen;
-    private Checkbox checkboxWidescreen;
     private boolean isFullscreen = MenuSizes.FULLSCREEN;
+    private boolean isWidescreen = MenuSizes.WIDESCREEN;
     private int screenWidth = MenuSizes.SCREEN_WIDTH;
     private int screenHeight = MenuSizes.SCREEN_HEIGHT;
     private Game game;
@@ -37,11 +36,14 @@ class VideoMenu implements Serializable {
 
     private int createCheckBoxes() {
         int checkboxY = MenuSizes.MENU_OPTIONS_Y;
-        checkboxFullscreen = new Checkbox("Fullscreen", MenuSizes.MENU_OPTIONS_X, checkboxY);
-        checkboxFullscreen.setSelected(Display.isFullscreen());
+        Checkbox checkboxFullscreen = new Checkbox(MenuConstants.NAME_OF_CHECKBOX_FULLSCREEN,
+                MenuSizes.MENU_OPTIONS_X, checkboxY);
+        checkboxFullscreen.setSelected(isFullscreen);
         videoObjects.add(checkboxFullscreen);
         checkboxY += MenuSizes.DISTANCE_BETWEEN_CHECKBOX_Y;
-        checkboxWidescreen = new Checkbox("Widescreen", MenuSizes.MENU_OPTIONS_X, checkboxY);
+        Checkbox checkboxWidescreen = new Checkbox(MenuConstants.NAME_OF_CHECKBOX_WIDESCREEN,
+                MenuSizes.MENU_OPTIONS_X, checkboxY);
+        checkboxWidescreen.setSelected(isWidescreen);
         videoObjects.add(checkboxWidescreen);
         checkboxY += MenuSizes.DISTANCE_BETWEEN_CHECKBOX_Y;
         return checkboxY;
@@ -108,6 +110,11 @@ class VideoMenu implements Serializable {
                 }
             } else if (menuObject instanceof Field) {
                 Field field = (Field)menuObject;
+                if (field.isWidescreen()) {
+                    field.setVisible(isWidescreen);
+                } else {
+                    field.setVisible(!isWidescreen);
+                }
                 if (field.isPressed()) {
                     field.setNotPressed();
                     changeSelectedField(field);
@@ -115,22 +122,15 @@ class VideoMenu implements Serializable {
                     screenHeight = field.getScreenHeight();
                     isSettingsChanged = true;
                 }
-            }
-        }
-        if (checkboxFullscreen.isPressed()) {
-            checkboxFullscreen.setNotPressed();
-            isFullscreen = checkboxFullscreen.isSelected();
-            isSettingsChanged = true;
-        }
-        if (checkboxWidescreen.isPressed()) {
-            checkboxWidescreen.setNotPressed();
-            for (MenuObject menuObject : videoObjects) {
-                if (menuObject instanceof Field) {
-                    Field field = (Field)menuObject;
-                    if (field.isWidescreen()) {
-                        field.setVisible(checkboxWidescreen.isSelected());
-                    } else {
-                        field.setVisible(!checkboxWidescreen.isSelected());
+            } else if (menuObject instanceof Checkbox) {
+                Checkbox checkbox = (Checkbox)menuObject;
+                if (checkbox.isPressed()) {
+                    checkbox.setNotPressed();
+                    if (checkbox.toString().equals(MenuConstants.NAME_OF_CHECKBOX_FULLSCREEN)) {
+                        isFullscreen = checkbox.isSelected();
+                        isSettingsChanged = true;
+                    } else if (checkbox.toString().equals(MenuConstants.NAME_OF_CHECKBOX_WIDESCREEN)) {
+                        isWidescreen = checkbox.isSelected();
                     }
                 }
             }
@@ -157,6 +157,7 @@ class VideoMenu implements Serializable {
                 MenuConstants.NAME_OF_VIDEO_SETTINGS).getAbsolutePath();
         try(ObjectOutputStream videoSettings = new ObjectOutputStream(new FileOutputStream(videoSettingsFullName))) {
             videoSettings.writeBoolean(isFullscreen);
+            videoSettings.writeBoolean(isWidescreen);
             videoSettings.writeInt(screenWidth);
             videoSettings.writeInt(screenHeight);
         } catch (Exception e) {
@@ -167,8 +168,8 @@ class VideoMenu implements Serializable {
 
     void resetChangedSettings() {
         if (isSettingsChanged) {
-            checkboxFullscreen.setSelected(Display.isFullscreen());
             isFullscreen = MenuSizes.FULLSCREEN;
+            isWidescreen = MenuSizes.WIDESCREEN;
             screenWidth = MenuSizes.SCREEN_WIDTH;
             screenHeight = MenuSizes.SCREEN_HEIGHT;
             for (MenuObject menuObject : videoObjects) {

@@ -11,46 +11,96 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Human extends GameObject {
-    private transient GameTexture textureHuman;
+    private transient GameTexture texture;
     private int textureSize = Constants.HUMAN_TEXTURE_SIZE;
     private float angle = ThreadLocalRandom.current().nextInt(0, 360);
     private float rechargeTime;
     private float fireCooldownTime = 0;
     private float speed = 0;
+    private float invulnerableTime = 0;
 
-    Human(GameObjectType type, GameTexture textureHuman, Color color) {
+    Human(GameObjectType type, GameTexture texture, Color color) {
         setType(type);
         setWidth(Constants.HUMAN_SIZE);
         setHeight(Constants.HUMAN_SIZE);
-        this.textureHuman = textureHuman;
+        this.texture = texture;
         setColor(color);
     }
 
     @Override
     public void render() {
         final float centerTX = (float)(textureSize / 2 -
-                (double)Constants.HUMAN_GUN_SIZE * textureSize / (2 * textureHuman.getTextureWidth()));
+                (double)Constants.HUMAN_GUN_SIZE * textureSize / (2 * texture.getTextureWidth()));
         final float centerTY = textureSize / 2;
         GL11.glColor3ub((byte)getColor().getRed(), (byte)getColor().getGreen(), (byte)getColor().getBlue());
-        textureHuman.draw(getX(), getY(), textureSize, textureSize, centerTX, centerTY, angle);
+        texture.draw(getX(), getY(), textureSize, textureSize, centerTX, centerTY, angle);
         GL11.glColor3f(1, 1, 1);
     }
 
     @Override
     public void update(float deltaTime) {
-        setTextureHuman();
+        setTexture();
         super.update(deltaTime);
         if (fireCooldownTime > 0) {
             fireCooldownTime -= deltaTime;
+        }
+
+        if (invulnerableTime > 0) {
+            invulnerableTime -= deltaTime;
+        } else {
+            if (isInvulnerable()) {
+                setInvulnerable(false);
+            }
         }
     }
 
     @Override
     public void intersect(GameObject otherObject) {
-
+        if (otherObject.getType() == GameObjectType.BONUS &&
+                otherObject.getHealth() == 1) {
+            ((Bonus)otherObject).giveImprovement(this);
+            otherObject.setHealth(0);
+        }
     }
 
-    void move(Direction direction) {
+    void moveAlongAxes(Direction direction) {
+        setXSpeed(0);
+        setYSpeed(0);
+        switch (direction) {
+            case UP:
+                setYSpeed(-speed);
+                break;
+            case DOWN:
+                setYSpeed(speed);
+                break;
+            case LEFT:
+                setXSpeed(-speed);
+                break;
+            case RIGHT:
+                setXSpeed(speed);
+                break;
+            case UP_LEFT:
+                setXSpeed(-speed * Constants.MATH_45_ANGLE);
+                setYSpeed(-speed * Constants.MATH_45_ANGLE);
+                break;
+            case UP_RIGHT:
+                setXSpeed(speed * Constants.MATH_45_ANGLE);
+                setYSpeed(-speed * Constants.MATH_45_ANGLE);
+                break;
+            case DOWN_LEFT:
+                setXSpeed(-speed * Constants.MATH_45_ANGLE);
+                setYSpeed(speed * Constants.MATH_45_ANGLE);
+                break;
+            case DOWN_RIGHT:
+                setXSpeed(speed * Constants.MATH_45_ANGLE);
+                setYSpeed(speed * Constants.MATH_45_ANGLE);
+                break;
+            default:
+                System.out.println("Error: non-existent direction \"" + direction.name() + "\"!");
+        }
+    }
+
+    void moveTowardsGaze(Direction direction) {
         setXSpeed(0);
         setYSpeed(0);
         switch (direction) {
@@ -114,7 +164,7 @@ public class Human extends GameObject {
 
     private float[] calculateFrontCellPosition() {
         float radius = (float)(textureSize / 2 +
-                (double)Constants.HUMAN_GUN_SIZE * textureSize / (2 * textureHuman.getTextureWidth())) + Constants.BULLET_SIZE / 2;
+                (double)Constants.HUMAN_GUN_SIZE * textureSize / (2 * texture.getTextureWidth())) + Constants.BULLET_SIZE / 2;
         float x = getX() + (float)Math.cos(Math.toRadians(angle)) * radius;
         float y = getY() + (float)-Math.sin(Math.toRadians(angle)) * radius;
         return new float[]{x, y};
@@ -222,7 +272,12 @@ public class Human extends GameObject {
         this.angle = angle;
     }
 
-    public void setTextureHuman() {
-        textureHuman = getGame().getTextures()[(getHealth() == 1) ? NameOfTexture.TEXTURE_HUMAN1.getCode() : NameOfTexture.TEXTURE_HUMAN2.getCode()];
+    public void setTexture() {
+        texture = getGame().getTextures()[(getHealth() == 1) ? NameOfTexture.TEXTURE_HUMAN1.getCode() : NameOfTexture.TEXTURE_HUMAN2.getCode()];
+    }
+
+    @SuppressWarnings("all")
+    void setInvulnerableTime(float invulnerableTime) {
+        this.invulnerableTime = invulnerableTime;
     }
 }
