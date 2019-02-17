@@ -4,7 +4,7 @@ import com.rusanov.game.Shooter.game.Constants;
 import com.rusanov.game.Shooter.Input;
 import com.rusanov.game.Shooter.game.Game;
 import com.rusanov.game.Shooter.game.Main;
-import com.rusanov.game.Shooter.menu.objects.MenuButton;
+import com.rusanov.game.Shooter.menu.objects.Button;
 import com.rusanov.game.Shooter.menu.objects.MenuObject;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -35,14 +35,14 @@ public class MenuConstructor implements Serializable {
         int buttonStartY = MenuSizes.SCREEN_HEIGHT / 2 - MainMenuItem.values().length *
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < MainMenuItem.values().length; i++) {
-            MenuButton button = new MenuButton(MainMenuItem.values()[i], true, MainMenuItem.values()[i].toString(),
+            Button button = new Button(MainMenuItem.values()[i], true, MainMenuItem.values()[i].toString(),
                     buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             mainMenuObjects.add(button);
         }
         buttonStartY = MenuSizes.SCREEN_HEIGHT / 2 - OptionsItem.values().length *
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < OptionsItem.values().length; i++) {
-            MenuButton button = new MenuButton(OptionsItem.values()[i], true, OptionsItem.values()[i].toString(),
+            Button button = new Button(OptionsItem.values()[i], true, OptionsItem.values()[i].toString(),
                     buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             button.setX(MenuSizes.BUTTON_OPTIONS_BORDER_X);
             optionsObjects.add(button);
@@ -74,8 +74,8 @@ public class MenuConstructor implements Serializable {
     }
 
     private void setButtonLoadStatus(MenuObject menuObject, boolean isActive) {
-        if (menuObject instanceof MenuButton) {
-            MenuButton button = (MenuButton) menuObject;
+        if (menuObject instanceof Button) {
+            Button button = (Button) menuObject;
             if (button.toString().equals("LOAD")) {
                 button.setActive(isActive);
             }
@@ -149,8 +149,8 @@ public class MenuConstructor implements Serializable {
         }
         for (MenuObject menuObject : mainMenuObjects) {
             menuObject.update();
-            if (menuObject instanceof MenuButton) {
-                MenuButton button = (MenuButton)menuObject;
+            if (menuObject instanceof Button) {
+                Button button = (Button)menuObject;
                 if (button.isPressed()) {
                     button.setPressed(false);
                     MainMenuItem item = (MainMenuItem)button.getId();
@@ -186,8 +186,8 @@ public class MenuConstructor implements Serializable {
         }
         for (MenuObject menuObject : optionsObjects) {
             menuObject.update();
-            if (menuObject instanceof MenuButton) {
-                MenuButton button = (MenuButton) menuObject;
+            if (menuObject instanceof Button) {
+                Button button = (Button) menuObject;
                 if (button.isPressed()) {
                     button.setPressed(false);
                     OptionsItem item = (OptionsItem)button.getId();
@@ -220,10 +220,10 @@ public class MenuConstructor implements Serializable {
         }
     }
 
-    private void changePressedButton(MenuButton pressedButton, List<MenuObject> menuObjects) {
+    private void changePressedButton(Button pressedButton, List<MenuObject> menuObjects) {
         for (MenuObject menuObject : menuObjects) {
-            if (menuObject instanceof MenuButton) {
-                MenuButton button = (MenuButton) menuObject;
+            if (menuObject instanceof Button) {
+                Button button = (Button) menuObject;
                 button.setPressed(false);
             }
         }

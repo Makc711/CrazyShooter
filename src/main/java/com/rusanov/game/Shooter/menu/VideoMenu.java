@@ -14,7 +14,7 @@ import java.util.List;
 
 class VideoMenu implements Serializable {
     private List<MenuObject> videoObjects = new ArrayList<>();
-    private MenuButton buttonVideo;
+    private Button buttonVideo;
     private boolean isSettingsChanged = false;
     private boolean isFullscreen = MenuSizes.FULLSCREEN;
     private boolean isWidescreen = MenuSizes.WIDESCREEN;
@@ -22,7 +22,7 @@ class VideoMenu implements Serializable {
     private int screenHeight = MenuSizes.SCREEN_HEIGHT;
     private Game game;
 
-    VideoMenu(MenuButton buttonVideo, Game game) {
+    VideoMenu(Button buttonVideo, Game game) {
         this.game = game;
         this.buttonVideo = buttonVideo;
         createVideoObjects();
@@ -64,23 +64,23 @@ class VideoMenu implements Serializable {
                     if (MenuSizes.SCREEN_WIDTH == current.getWidth() && MenuSizes.SCREEN_HEIGHT == current.getHeight()) {
                         isFieldSelected = true;
                     }
-                    Field field = new Field(isFieldSelected);
-                    field.setName(nameOfField);
-                    field.setScreenWidth(current.getWidth());
-                    field.setScreenHeight(current.getHeight());
-                    field.setX(MenuSizes.VIDEO_FIELD_X);
+                    TextField textField = new TextField(isFieldSelected);
+                    textField.setName(nameOfField);
+                    textField.setScreenWidth(current.getWidth());
+                    textField.setScreenHeight(current.getHeight());
+                    textField.setX(MenuSizes.VIDEO_FIELD_X);
                     if (displayFormat > Constants.DISPLAY_WIDESCREEN) {
-                        field.setY(fieldYDisplay);
+                        textField.setY(fieldYDisplay);
                         fieldYDisplay += MenuSizes.VIDEO_FIELD_HEIGHT;
-                        field.setWidescreen(true);
-                        field.setVisible(false);
+                        textField.setWidescreen(true);
+                        textField.setVisible(false);
                     } else {
-                        field.setY(fieldYDisplayWidescreen);
+                        textField.setY(fieldYDisplayWidescreen);
                         fieldYDisplayWidescreen += MenuSizes.VIDEO_FIELD_HEIGHT;
-                        field.setWidescreen(false);
-                        field.setVisible(true);
+                        textField.setWidescreen(false);
+                        textField.setVisible(true);
                     }
-                    videoObjects.add(field);
+                    videoObjects.add(textField);
                 }
             }
         } catch (LWJGLException e) {
@@ -97,8 +97,8 @@ class VideoMenu implements Serializable {
     void update() {
         for (MenuObject menuObject : videoObjects) {
             menuObject.update();
-            if (menuObject instanceof MenuButton) {
-                MenuButton button = (MenuButton) menuObject;
+            if (menuObject instanceof Button) {
+                Button button = (Button) menuObject;
                 if (button.getId() == null) {
                     button.setActive(isSettingsChanged);
                     if (isSettingsChanged && button.isPressed()) {
@@ -108,18 +108,18 @@ class VideoMenu implements Serializable {
                         isSettingsChanged = false;
                     }
                 }
-            } else if (menuObject instanceof Field) {
-                Field field = (Field)menuObject;
-                if (field.isWidescreen()) {
-                    field.setVisible(isWidescreen);
+            } else if (menuObject instanceof TextField) {
+                TextField textField = (TextField)menuObject;
+                if (textField.isWidescreen()) {
+                    textField.setVisible(isWidescreen);
                 } else {
-                    field.setVisible(!isWidescreen);
+                    textField.setVisible(!isWidescreen);
                 }
-                if (field.isPressed()) {
-                    field.setNotPressed();
-                    changeSelectedField(field);
-                    screenWidth = field.getScreenWidth();
-                    screenHeight = field.getScreenHeight();
+                if (textField.isPressed()) {
+                    textField.setNotPressed();
+                    changeSelectedField(textField);
+                    screenWidth = textField.getScreenWidth();
+                    screenHeight = textField.getScreenHeight();
                     isSettingsChanged = true;
                 }
             } else if (menuObject instanceof Checkbox) {
@@ -137,11 +137,11 @@ class VideoMenu implements Serializable {
         }
     }
 
-    private void changeSelectedField(Field selectedField) {
+    private void changeSelectedField(TextField selectedTextField) {
         for (MenuObject menuObject : videoObjects) {
-            if (menuObject instanceof Field && menuObject != selectedField) {
-                Field field = (Field)menuObject;
-                field.setSelected(false);
+            if (menuObject instanceof TextField && menuObject != selectedTextField) {
+                TextField textField = (TextField)menuObject;
+                textField.setSelected(false);
             }
         }
     }
@@ -173,10 +173,10 @@ class VideoMenu implements Serializable {
             screenWidth = MenuSizes.SCREEN_WIDTH;
             screenHeight = MenuSizes.SCREEN_HEIGHT;
             for (MenuObject menuObject : videoObjects) {
-                if (menuObject instanceof Field) {
-                    Field field = (Field)menuObject;
-                    field.setSelected(MenuSizes.SCREEN_WIDTH == field.getScreenWidth() &&
-                            MenuSizes.SCREEN_HEIGHT == field.getScreenHeight());
+                if (menuObject instanceof TextField) {
+                    TextField textField = (TextField)menuObject;
+                    textField.setSelected(MenuSizes.SCREEN_WIDTH == textField.getScreenWidth() &&
+                            MenuSizes.SCREEN_HEIGHT == textField.getScreenHeight());
                 }
             }
             isSettingsChanged = false;

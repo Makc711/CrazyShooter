@@ -4,7 +4,7 @@ import com.rusanov.game.Shooter.Input;
 import com.rusanov.game.Shooter.game.Game;
 import com.rusanov.game.Shooter.game.Main;
 import com.rusanov.game.Shooter.menu.objects.Background;
-import com.rusanov.game.Shooter.menu.objects.MenuButton;
+import com.rusanov.game.Shooter.menu.objects.Button;
 import com.rusanov.game.Shooter.menu.objects.MenuObject;
 import org.lwjgl.input.Keyboard;
 
@@ -29,7 +29,7 @@ public class PauseMenu implements Serializable {
         int buttonStartY = MenuSizes.SCREEN_HEIGHT / 2 - PauseItem.values().length *
                 MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y / 2;
         for (int i = 0; i < PauseItem.values().length; i++) {
-            MenuButton button = new MenuButton(PauseItem.values()[i], true, PauseItem.values()[i].toString(),
+            Button button = new Button(PauseItem.values()[i], true, PauseItem.values()[i].toString(),
                     buttonStartY + i * MenuSizes.DISTANCE_BETWEEN_BUTTONS_Y);
             pauseObjects.add(button);
         }
@@ -47,8 +47,8 @@ public class PauseMenu implements Serializable {
         }
         for (MenuObject menuObject : pauseObjects) {
             menuObject.update();
-            if (menuObject instanceof MenuButton) {
-                MenuButton button = (MenuButton) menuObject;
+            if (menuObject instanceof Button) {
+                Button button = (Button) menuObject;
                 if (button.isPressed()) {
                     button.setPressed(false);
                     PauseItem item = (PauseItem) button.getId();

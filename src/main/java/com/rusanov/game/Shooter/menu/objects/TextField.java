@@ -8,7 +8,7 @@ import com.rusanov.game.Shooter.menu.MenuSizes;
 import com.rusanov.game.Shooter.menu.FontGame;
 import org.lwjgl.opengl.GL11;
 
-public class Field extends MenuObject {
+public class TextField extends MenuObject {
     private boolean isVisible;
     private boolean isSelected;
     private boolean isPressed = false;
@@ -18,7 +18,7 @@ public class Field extends MenuObject {
     private int screenWidth;
     private int screenHeight;
 
-    public Field(boolean isSelected) {
+    public TextField(boolean isSelected) {
         setState(isSelected);
         width = MenuSizes.VIDEO_FIELD_WIDTH;
         height = MenuSizes.VIDEO_FIELD_HEIGHT;
@@ -40,7 +40,7 @@ public class Field extends MenuObject {
     @Override
     public void render() {
         if (isVisible) {
-            GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), (byte)transparency);
+            GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), transparency);
             Draw.filledRectangle(x, y, width, height);
             GL11.glColor4f(1, 1, 1, 1);
 

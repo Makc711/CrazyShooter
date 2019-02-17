@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-public class MenuButton extends MenuObject {
+public class Button extends MenuObject {
     private Item id = null;
     private boolean isActive;
     private boolean isPressed = false;
@@ -19,14 +19,14 @@ public class MenuButton extends MenuObject {
     private float blackoutText;
     private Color pressedColor;
 
-    public MenuButton(boolean isActive, String name, int x, int y) {
+    public Button(boolean isActive, String name, int x, int y) {
         setState(isActive);
         this.name = name;
         this.x = x;
         this.y = y;
     }
 
-    public MenuButton(Item id, boolean isActive, String name, int y) {
+    public Button(Item id, boolean isActive, String name, int y) {
         this.id = id;
         setState(isActive);
         this.name = name;
@@ -49,7 +49,7 @@ public class MenuButton extends MenuObject {
 
     @Override
     public void render() {
-        GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), (byte)transparency);
+        GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), transparency);
         Draw.filledRectangle(x + MenuSizes.BUTTON_BORDER_WIDTH / 2, y + MenuSizes.BUTTON_BORDER_WIDTH / 2,
                 width - MenuSizes.BUTTON_BORDER_WIDTH - MenuSizes.BUTTON_BORDER_WIDTH / 2,
                 height - MenuSizes.BUTTON_BORDER_WIDTH - MenuSizes.BUTTON_BORDER_WIDTH / 2);

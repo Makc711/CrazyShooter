@@ -11,7 +11,7 @@ public abstract class MenuObject implements Serializable {
     int width = MenuSizes.BUTTON_WIDTH;
     int height = MenuSizes.BUTTON_HEIGHT;
     Color color;
-    int transparency;
+    byte transparency;
 
     public abstract void render();
 

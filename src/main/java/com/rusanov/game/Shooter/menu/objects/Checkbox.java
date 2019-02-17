@@ -33,7 +33,7 @@ public class Checkbox extends MenuObject {
 
         GL11.glColor3ub((byte)Color.black.getRed(), (byte)Color.black.getGreen(), (byte)Color.black.getBlue());
         Draw.filledCircle(checkboxX, checkboxY, width, 16);
-        GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), (byte)transparency);
+        GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), transparency);
         Draw.filledCircle(checkboxX, checkboxY, MenuSizes.CHECKBOX_DIAMETER_ACTIVE, 16);
         if (isSelected) {
             GL11.glColor3ub((byte)Color.black.getRed(), (byte)Color.black.getGreen(), (byte)Color.black.getBlue());

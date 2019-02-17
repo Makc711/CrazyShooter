@@ -31,11 +31,11 @@ public class Background extends MenuObject {
     @Override
     public void render() {
         if (colorLeft == null) {
-            GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), (byte)transparency);
+            GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), transparency);
             Draw.filledRectangle(x, y, width, height);
             GL11.glColor4f(1, 1, 1, 1);
         } else {
-            Draw.filledRectangle(x, y, width, height, colorLeft, color, (byte)transparency);
+            Draw.filledRectangle(x, y, width, height, colorLeft, color, transparency);
         }
     }
 

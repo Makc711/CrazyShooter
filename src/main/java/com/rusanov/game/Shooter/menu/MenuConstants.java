@@ -23,10 +23,10 @@ public class MenuConstants {
     public static final float FIELD_TEXT_BLACKOUT_PASSIVE = 0.2f;
     public static final float BUTTON_TEXT_BLACKOUT_ACTIVE = 0.2f;
     public static final float BUTTON_TEXT_BLACKOUT_PASSIVE = 0.8f;
-    public static final int BUTTON_TRANSPARENCY = 255;
-    public static final int BUTTON_TRANSPARENCY_SELECTED = 150;
+    public static final byte BUTTON_TRANSPARENCY = (byte)255;
+    public static final byte BUTTON_TRANSPARENCY_SELECTED = (byte)150;
     public static final Color BACKGROUND_COLOR = Color.CYAN;
-    public static final int BACKGROUND_TRANSPARENCY = 150;
+    public static final byte BACKGROUND_TRANSPARENCY = (byte)150;
 
     static final int KEY_FIELD_X = 180;
     static final int KEY_FIELD_WIDTH = 160;
@@ -36,9 +36,9 @@ public class MenuConstants {
     static final int VIDEO_FIELD_WIDTH = 200;
     static final int VIDEO_FIELD_HEIGHT = 30;
     public static final Color VIDEO_FIELD_COLOR = Color.BLUE.brighter();
-    public static final int VIDEO_FIELD_TRANSPARENCY = 130;
-    public static final int VIDEO_FIELD_TRANSPARENCY_CHOSE = 100;
-    public static final int VIDEO_FIELD_TRANSPARENCY_SELECTED = 255;
+    public static final byte VIDEO_FIELD_TRANSPARENCY = (byte)130;
+    public static final byte VIDEO_FIELD_TRANSPARENCY_CHOSE = (byte)100;
+    public static final byte VIDEO_FIELD_TRANSPARENCY_SELECTED = (byte)255;
     public static final float VIDEO_FIELD_TEXT_SELECTED = 1.0f;
     public static final float VIDEO_FIELD_TEXT = 0.6f;
 

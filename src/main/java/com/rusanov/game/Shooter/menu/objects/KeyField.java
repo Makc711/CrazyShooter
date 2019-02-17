@@ -54,12 +54,12 @@ public class KeyField extends MenuObject {
     public void render() {
         Draw.text(FontGame.TEXTURE_FONT, FontGame.TIMES_NEW_ROMAN, x, y, name, MenuConstants.TEXT_COLOR);
 
-        GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), (byte)transparency);
+        GL11.glColor4ub((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue(), transparency);
         Draw.filledRectangle(fieldX + MenuSizes.BUTTON_BORDER_WIDTH / 2, fieldY + MenuSizes.BUTTON_BORDER_WIDTH / 2,
                 width - MenuSizes.BUTTON_BORDER_WIDTH - MenuSizes.BUTTON_BORDER_WIDTH / 2,
                 height - MenuSizes.BUTTON_BORDER_WIDTH - MenuSizes.BUTTON_BORDER_WIDTH / 2);
         GL11.glColor4ub((byte)color.darker().getRed(), (byte)color.darker().getGreen(), (byte)color.darker().getBlue(),
-                (byte)transparency);
+                transparency);
         Draw.rectangle(fieldX, fieldY, width, height, MenuSizes.BUTTON_BORDER_WIDTH);
         GL11.glColor4f(1, 1, 1, 1);
 

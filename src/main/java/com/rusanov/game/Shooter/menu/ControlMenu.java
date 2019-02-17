@@ -11,11 +11,11 @@ import java.util.List;
 
 class ControlMenu implements Serializable {
     private List<MenuObject> controlObjects = new ArrayList<>();
-    private MenuButton buttonControl;
+    private Button buttonControl;
     private boolean isSettingsChanged = false;
     private boolean isMoveTowardsGaze = true;
 
-    ControlMenu(MenuButton buttonControl) {
+    ControlMenu(Button buttonControl) {
         this.buttonControl = buttonControl;
         createControlObjects();
     }
@@ -56,8 +56,8 @@ class ControlMenu implements Serializable {
     void update() {
         for (MenuObject menuObject : controlObjects) {
             menuObject.update();
-            if (menuObject instanceof MenuButton) {
-                MenuButton button = (MenuButton)menuObject;
+            if (menuObject instanceof Button) {
+                Button button = (Button)menuObject;
                 if (button.getId() == null) {
                     button.setActive(isSettingsChanged);
                     if (isSettingsChanged && button.isPressed()) {
@@ -156,7 +156,7 @@ class ControlMenu implements Serializable {
         setAllFieldsActive();
     }
 
-    static void createOptionsBackground(MenuButton buttonParent, List<MenuObject> menuObjects) {
+    static void createOptionsBackground(Button buttonParent, List<MenuObject> menuObjects) {
         int buttonBackgroundX = MenuSizes.BUTTON_OPTIONS_BORDER_X + MenuSizes.BUTTON_WIDTH;
         int buttonBackgroundY = buttonParent.getY();
         menuObjects.add(new Background(buttonBackgroundX, buttonBackgroundY, MenuSizes.BUTTON_OPTIONS_BORDER_X,
@@ -166,7 +166,7 @@ class ControlMenu implements Serializable {
         int backgroundWidth = MenuSizes.MENU_OPTIONS_BACKGROUND_WIDTH;
         int backgroundHeight = MenuSizes.SCREEN_HEIGHT - 2 * MenuSizes.BUTTON_OPTIONS_BORDER_Y;
         menuObjects.add(new Background(backgroundX, backgroundY, backgroundWidth, backgroundHeight));
-        MenuButton button = new MenuButton(false, "SAVE",
+        Button button = new Button(false, "SAVE",
                 backgroundX + backgroundWidth / 2 - MenuSizes.BUTTON_WIDTH / 2,
                 backgroundY + backgroundHeight - MenuSizes.BUTTON_OPTIONS_BORDER_Y / 2 - MenuSizes.BUTTON_HEIGHT);
         menuObjects.add(button);
